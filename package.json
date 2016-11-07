@@ -4,7 +4,8 @@
   "description": "Example implementation of SOA",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "soap": "^2.15.9"
   },
   "devDependencies": {},
   "scripts": {
