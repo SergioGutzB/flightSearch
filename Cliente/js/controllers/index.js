@@ -28,8 +28,6 @@ clienteAPP.controller('Index', ['$scope', '$http', '$location', 'fare', 'iata', 
       var return_date = $filter('date')($scope.dates.return, 'yyyy-MM-dd')
     }
 
-
-
     if ($scope.flight_option == 'oneWay') {
       $location.path('/results/' + origin + '-' + destination + '/' +
         departure_date + '/adults-' + adults + '/children-' + children + '/seat-babies-' + babies1 + '/babies-' + babies2 + '/')
@@ -38,6 +36,7 @@ clienteAPP.controller('Index', ['$scope', '$http', '$location', 'fare', 'iata', 
         departure_date + '/' + return_date + '/adults-' + adults + '/children-' + children + '/seat-babies-' + babies1 + '/babies-' + babies2 + '/')
     }
     console.log(origin, destination, adults, children, babies1, babies2, departure_date, return_date)
+
   }
 
 

@@ -42,7 +42,19 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   $scope.width = (w.width() - (w.width() * 30 / 100)) / 2
   $scope.height = 100
 
-  $fare.searchFare($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 })
+  if ($rp.departure) {
+    var departure_date = $filter('date')($rp.departure, 'yyyy-MM-dd')
+    departure_date = departure_date.split('-')
+    departure_date = new Date(departure_date[0], departure_date[1] - 1, departure_date[2])
+  }
+
+  if ($rp.return) {
+    var return_date = $filter('date')($rp.return, 'yyyy-MM-dd')
+    return_date = return_date.split('-')
+    return_date = new Date(return_date[0], return_date[1] - 1, return_date[2])
+  }
+
+  $fare.searchFare($rp.origin, $rp.destination, departure_date, return_date, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 })
     .then(function(res) {
 
       $scope.fares = res.data.result
@@ -59,8 +71,8 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
         for (index in $scope.fares) {
           $scope.fares_by_price.push($scope.fares[index])
         }
-
-        $scope.fares_by_price.forEach(function (fare) {
+        console.log($scope.fares_by_price, $scope.fares_by_price.lenght)
+        $scope.fares_by_price.forEach(function(fare) {
           if (fare.departure) {
             fare.departure.departure_date = new Date(fare.departure.departure_date)
             fare.departure.arrival_date = new Date(fare.departure.arrival_date)
@@ -69,10 +81,10 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
             fare.return.arrival_date = new Date(fare.return.arrival_date)
           }
         })
-        }
-        $scope.loading = false
-        console.log($scope.fares_by_price, $scope.fares_by_price.lenght)
-      
+      }
+      $scope.loading = false
+      console.log($scope.fares_by_price, $scope.fares_by_price.lenght)
+
     })
 
   // $fare.search($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 },
