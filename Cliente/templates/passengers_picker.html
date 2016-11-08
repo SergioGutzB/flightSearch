@@ -1,0 +1,45 @@
+<div class="col-xs-12 col-sm-12 col-md-3">
+    
+    <div class="col-xs-6">
+        <div class="form-group">                            
+            <label></label>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle dropdown_passengers" type="button" id="dropdownMenu1" data-toggle="dropdown"><span class="n_passengers" id="n_passengers">[[passengers.adults]] Adulto</span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li>
+                        <input class="b_minus adultsm" type="button" value="-" field='adults'>
+                        <input class="input-passengers" id="adults" name="adults" readonly ng-model="passengers.adults">
+                        <input class="b_plus adultsp" type="button" value="+" field='adults'>
+                        <span class="label_passengers">Adultos</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-6">
+        <div class="form-group">                            
+            <label></label>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle dropdown_passengers" type="button" id="dropdownMenu1" data-toggle="dropdown"><span class="n_passengers" id="n_passengers">[[passengers.children + passengers.babies1]] Niños</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                    <li>
+                        <input class="b_minus childrenm" type="button" value="-" field='children'>
+                        <input class="input-passengers" id="children" name="children" readonly ng-model="passengers.children">
+                        <input class="b_plus childrenp" type="button" value="+" field='children'>
+                        <span class="label_passengers">Niños (2-12 años)</span>
+                    </li>
+                    <li>
+                        <input class="b_minus babies1m" type="button" value="-" field='babies1'>
+                        <input class="input-passengers" id="babies1" name="babies1" readonly ng-model="passengers.babies1">
+                        <input class="b_plus babies1p" type="button" value="+" field='babies1'>
+                        <span class="label_passengers">Bebés</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>

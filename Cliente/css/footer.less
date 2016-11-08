@@ -1,0 +1,103 @@
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 1px) {
+	/********************
+   		footer
+	*********************/
+
+	footer{
+
+        background: url("@{url-images}mapa.png") no-repeat;
+		background-position: bottom;
+		background-color: #3286C4;
+		transition-duration: 2s, 2s;
+		-webkit-transition-duration: 2s, 2s;
+		-moz-transition-duration: 2s, 2s;
+		-o-transition-duration: 2s, 2s;
+		
+		.row-footer {
+			padding-top: 22px;
+			ul {	
+				padding: 0px;
+				h5,a {
+					font-family: Larsseit-Med;
+					font-weight: 700;
+					color: #fff;
+					&:hover,&:focus {
+						color: #fff;
+					}
+				}
+				h5 {
+					font-size: 12px;
+					padding-bottom: 3px;
+				}
+				a {
+					font-weight: 400;
+					line-height: 0;
+				}
+				.twitter {
+					width: 21px;	
+				}
+				.fa-facebook {
+					font-size: 22px;
+				}
+			}
+			.col-agency,.social {
+				padding-bottom: 20px;
+			}
+		}
+	}
+	
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+	footer {
+		height: 188px;
+	}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+	footer{
+		.col-md-2 {
+    		width: 13%;
+		}
+	}
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+	footer{
+
+	}
+}
+
+@media(max-width : 964px) {
+	footer{
+        background: url("@{url-images}mapa2.png") no-repeat;
+		background-position: bottom;
+		background-color: #3286C4;
+		background-size: 100%;
+	}
+}
+
+@media(max-width : 480px) {
+	footer{
+		background: #3286C4 url("@{url-images}mapa2.png") no-repeat scroll center bottom / 212% auto;
+	}
+}
+
+@media only screen and (min-width: 455px) and (max-width: 767px) {
+    footer {
+    	.col-xs-6 {
+    		width: 35%;
+    	}
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1110px) {
+    footer {
+    	height: 208px;
+    }
+}

@@ -1,0 +1,45 @@
+<section class="row inputs search-form">
+  <div class="col-xs-12 col-sm-12 col-lg-10 col-lg-offset-1 form-results box-search">
+    <div class="row">
+      <div class="inputs-initial">
+        <div class="col-xs-12 col-sm-6 col-md-2 input-origin">
+          <img src="images/airplane_origin.png" alt="origin">
+          <label>ORIGEN</label>
+          <angucomplete-alt id="origin" selected-object="select_origin" local-data="airports" title-field="airport" search-fields="airport, code" initial-value="{{search.origin.originalObject.airport}}" minlength="1" />
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-2 input-destination">
+          <img src="images/airplane_des.png" alt="destination">
+          <label>DESTINO</label>
+          <angucomplete-alt id="destination" selected-object="select_destination" local-data="airports" title-field="airport" search-fields="airport, code" initial-value="{{search.destination.originalObject.airport}}" minlength="1" />
+        </div>
+
+        <date-picker departure="dates.departure" return="dates.return" show-return="dates.showReturn" ng-init="dates.showReturn = true"></date-picker>
+      </div>
+
+      <passengers-picker passengers="passengers" max="8" max-per="8" min-adults="1" class="passengers-picker"></passengers-picker>
+
+      <div class="col-xs-12 col-md-1 text-center">
+        <button class="btn btn-default btn-search" ng-click="search()">Ir</button>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-xs-12 col-md-12 cont-input-radio">
+        <ul class="list-inline">
+          <li>
+            <input type="radio" name="flightOption" id="oneWay" option="oneWay" value="oneWay" ng-model="flight_option" ng-click="change_flight_option('oneWay');"><label for="oneWay"><span><span></span></span>Solo ida</label>
+          </li>
+          <li>
+            <input type="radio" name="flightOption" id="roundTrip" option="roundTrip" value="roundTrip" ng-click="change_flight_option('roundTrip');" ng-model="flight_option"><label for="roundTrip"><span><span></span></span>Ida y regreso</label>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

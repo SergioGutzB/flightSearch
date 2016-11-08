@@ -1,0 +1,1426 @@
+
+@import "variables.less";
+@import "header.less";
+@import "footer.less";
+@import "mixings.less";
+@import "purchase.less";
+@import "bars-styles.less";
+
+.row {
+  margin: 0px !important;
+}
+#wrap {
+  min-height: 100%;
+} 
+
+#main {
+  overflow: auto;
+  background-color: #fff;
+    //padding-bottom: 130px;
+  }
+
+  li {
+    list-style: none !important;
+  }
+
+  .hid {
+    display: none;
+  }
+
+  .input-radio();
+
+  /* Custom, iPhone Retina */ 
+
+  @media only screen and (min-width:1px) {
+    body {
+
+      input {
+        font-family: Larsseit-Med;
+        color: #fff !important;
+        font-size: 20px;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        box-shadow: none !important;
+        &:focus {
+          box-shadow: none !important;
+        }
+      }
+
+      .btn-default {
+        text-shadow: 0px 0px 0px #FFF !important;
+        box-shadow: 0px 0px 0px !important;
+      }
+        /********************
+            container-index 
+            *********************/
+            .initial-container {
+              background-position: center center !important;
+              background-size: cover;
+
+              .box-policy {
+                background-color: @body_color;
+                padding-top: 10px;
+                .content {
+                  background-color: #fff;
+                  margin-top: 30px;
+                  margin-bottom: 30px;
+                  padding: 40px;
+                  border: 1px solid #f4f4f4;
+
+                  p {
+                    text-align: justify;
+                    font-family: Larsseit-Light;
+                    font-weight: 300;
+                    font-size: 16px;
+                  }
+                  h1 {                  
+                    font-family: Larsseit-Med;
+                    font-size: 35px;
+                    text-align: center;
+                    padding: 20px 0px;
+                    color: @volaires-gray;
+                  }
+                  h4 {
+                    padding: 20px 0px;
+                    font-size: 20px;
+                  }
+                  a{
+                    color: @volaires-gray;
+                  }
+                  a:hover {
+                    text-decoration: none;
+                  }
+                  strong {
+                    padding-right: 5px;
+                    font-weight: 500;
+                    font-family: Larsseit-Med;
+                  }
+                  ul li {
+                    list-style-type: circle;
+                  }
+                  li a {
+                    color: @volaires-blue;
+                  }
+                  li a:hover {
+                    color: @volaires-blue-hover;
+                  }
+                }
+              }   
+
+              .container-index.container-ticket {
+                background: url("@{url-images}ticket_background.jpg") no-repeat;
+                background-size: cover;
+              }
+
+              .content_index {
+                background-color: rgba(0, 0, 0, 0.1);
+                padding:73px 0px 150px 0px;
+                overflow: hidden;
+
+
+
+                .search-form {
+                  label {
+                    font-family: Larsseit-Light;
+                    font-size: 14px;
+                    padding: 4px;
+                    color: #fff;
+                  }
+
+                  .inputs-initial {
+                    input {
+                      min-width: 100% !important;
+                      background: transparent !important;
+                      border-color: transparent;
+                      border-bottom: 2px solid #fff !important;
+                      border-radius: 0px !important;
+                      margin-bottom: 20px;
+                    }
+                    img {
+                      width: 23px;
+                    }
+                    angucomplete-alt {
+                      outline-color: transparent !important;
+                      &:focus{
+                        outline-color: transparent !important;
+                      }
+                      .angucomplete-holder {
+                        outline-color: transparent !important;
+                        margin-top: 4px;
+                        &:focus {
+                          outline-color: transparent !important;
+                        }
+                        input {
+                          min-width: 80%;
+                          max-width: 80%;
+                          padding-top: 6px;
+                          outline-color: transparent;
+                          font-size: 17px !important;
+                          &:hover {
+                            outline-color: transparent;
+                          }
+                        }
+                        .angucomplete-dropdown {
+                          font-family: Larsseit-Light;
+                          width: 100%;
+                        }
+                      }
+                    }
+
+                    .cont-input-date-des {
+                      input {
+                        color:@volaires-blue !important;
+                      }
+                    }
+                  }
+
+                  .datepicker {
+                    margin-top: 4px;
+                    text-align: left;
+                    padding: 0px;
+                    input,input:focus,input:active {
+                      background: #fff !important;
+                      color: #000 !important;
+                      cursor: pointer;
+                      font-size: 13px;
+                    }
+                    .n-days {
+                      position: absolute;
+                      right: 30px;
+                      top: -5px;
+                      #days {
+                        background: url("@{url-images}/n_days.png") no-repeat;
+                        padding: 4px 0px 12px 0px;
+                        top: 7px;
+                        left: 287px;
+                        color: @volaires-blue;
+                        font-family: Larsseit-Med;
+                        text-align: center;
+                        width: 55px;
+                      }
+                      .days {
+                        padding: 4px 5px 12px 5px !important;
+                      }
+                    }
+                    label.hid,input.hid {
+                      display: block;
+                      opacity: 0.7;
+                    }
+                    input.hid {
+                      background: #ECECEC !important;
+                      border-color: #ECECEC !important;
+                    }
+
+                    .input-group-addon {
+                      border-color: #fff;
+                      border-radius: 0px;
+                      background: #fff;
+                      padding: 6px;
+                      .glyphicon-calendar {
+                        color: #1B345F;
+                      }
+                    }
+
+                    .form-control {
+                      padding: 6px 8px;
+                      margin-bottom: 0px;
+                    }
+                  }
+
+                  .dropdown_passengers,
+                  .open>.dropdown-toggle.btn-default {
+                    background: url("@{url-images}caret.png") no-repeat;
+                    background-color: @volaires-blue;
+                    border-color: @volaires-blue;
+                    background-position: right;
+                    padding: 5px 25px 4px 0px;
+                    background-size: 20px;
+                    border-radius: 0px;
+                    width: 100%;
+                    .label_passengers,.n_passengers {
+                      font-family: Larsseit-Med !important;
+                      font-size: 14px;
+                      color: #fff;
+                    }
+                    &:hover {
+                      background-color:@volaires-blue-hover;
+                      border-color: @volaires-blue-hover;
+                    }
+                  }
+                  .open .dropdown-menu {
+                    min-width: 247px;
+                    padding: 13px 0px;
+                    background: #205072;
+                    border-radius: 0px;
+
+                    .input-passengers {
+                      max-width: 25px;
+                      text-align: center;
+                      background: #fff;
+                      color: #4373BD !important;
+                      border: 0px !important;
+                    }
+                    .n_passengers {
+                      padding-right: 10px;
+                    }
+                    .b_minus,
+                    .b_plus{
+                      background: #fff;
+                      border: 1px solid #fff;
+                      color: @volaires-blue !important;
+                      &:hover {
+                        color:@volaires-blue-hover;
+                      }
+                    }
+                    .b_minus {
+                      margin-left: 13px;
+                      padding: 0px 8px;
+                    }
+                    .b_plus {
+                      margin-right: 10px;
+                    }
+                    .label_passengers,.n_passengers {
+                      font-family: Larsseit-Med !important;
+                      font-size: 16.37px;
+                      color: #fff !important;
+                    }
+                  }
+
+                  .dropdown-menu-right {
+                    margin-right: -5px;
+                  }
+
+                  .cont-input-radio {
+                    margin-top: 0px;
+                    li {
+                      padding-left: 0px;
+                      .input-radio();
+                      input[type=radio      ]:not(old):checked + label > span,
+                      input[type=checkbox   ]:not(old):checked + label > span {
+                        background: @volaires-yellow !important;
+                      }
+                      input[type=radio]:not(old):checked +  label > span:before,
+                      input[type=checkbox]:not(old):checked +  label > span:before {
+                        text-shadow: none;
+                        color: @volaires-yellow;
+                      }
+                      label {
+                        padding-left: 5px;
+                      }   
+                    }   
+                  }
+
+                  .pass-pick-small-container {
+                    .pass-pick-small {
+                      padding-left: 0px;
+                    }
+                  }
+                  .dropdown-children {
+                    margin: 20px 0px 0px 0px;
+                  }
+                  .passengers-picker {
+                    margin-top: 17px !important;
+                    padding: 0px;
+                    .form-group {
+                      margin-bottom: 0px;
+                    }
+                  }
+                }
+                .box-search {
+                  background: url("@{url-images}box.png") repeat scroll 0% 0%;
+                  padding-top: 8px;
+                }
+
+              }
+              .container-ticket {
+                background: url("@{url-images}ticket_background.jpg") no-repeat !important;
+                  background-size: cover !important;
+                  background-repeat: no-repeat !important;
+                  background-position: center bottom !important;
+              }
+              
+            }
+
+
+
+
+            .ui-datepicker {
+              border-radius: 0px !important;
+              border: 0px !important;
+              margin-top: 10px;
+              .ui-widget-header {
+                .ui-icon {
+                  background-size: cover !important;
+                  height: 16px;
+                  width: 13px;
+                  &.ui-icon-circle-triangle-w {
+                    background: transparent url("@{url-images}triangle_datepicker.png");  
+                    -webkit-transform: rotate(180deg);
+                    -moz-transform: rotate(180deg);
+                    rotation: 180deg;  
+                  }
+                  &.ui-icon-circle-triangle-e {
+                    background: transparent url("@{url-images}triangle_datepicker.png");    
+                  }
+                }
+                .ui-datepicker-prev,
+                .ui-datepicker-next {
+                  opacity: 1 !important;
+                  &.ui-state-hover, &.ui-state-focus {
+                    background: #fff;
+                    border: 0px;
+                  }
+                  &.ui-state-disabled {
+                    .ui-icon {
+                      opacity:0.5;
+                    }
+                  }
+                }
+              }
+              .ui-datepicker-title {
+                text-align: center;
+                color: @volaires-blue;
+              }
+              .ui-datepicker-calendar {
+                span {
+                  font-family: Larsseit-Light;
+                  text-align: center;
+                  color: #000;
+                }
+
+                .ui-state-default {
+                  font-family: Larsseit-Light;
+                  font-weight: 300 !important;
+                  color: #000 !important;
+                  text-align: center;
+                }
+
+                .ui-state,
+                .ui-state-hover,
+                .ui-state-highlight {
+                  background: url("@{url-images}circle_datepicker.png") no-repeat scroll 50% 50%;
+                  font-family: Larsseit-Light;
+                  font-weight: 700 !important;
+                  color: #fff !important;
+                  border: 0px;
+                  margin: 1px;
+                }
+              }
+            }
+
+            .phrase {
+              text-align: center !important;
+              padding-bottom: 60px;
+              text-align: center;
+              color: #fff;
+              h2,h3 {
+                font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-size: 26px;
+                margin-top: 0px;
+              }
+              h2 {
+                text-transform: uppercase;
+                margin-bottom: 10px;
+                font-weight: 700;
+              }
+            }
+
+
+
+        /********************
+                Results
+                *********************/
+                .results {
+                  background: #fff !important;
+                  .passengers-picker,
+                  .btn-search,.dropdown-children, 
+                  .cont-input-radio,.n-days {
+                    display: none;
+                  }
+
+                  .tabs-container {
+                    .tabs {
+                      padding: 0px;
+                      .tab {
+                        border-right: 2px solid @volaires-green;
+                        padding-right: 0px;
+                        h4 {
+                          font-family: Larsseit-Med;
+                          font-size: 13px;
+                          color: #363A3A;
+                          padding: 5px;
+                          margin: 0px;
+                          .fa {
+                            font-size: 10px;
+                          }
+                        }
+                        a {
+                          text-decoration: none !important;
+                        }
+                        &:hover {
+                          h4 {
+                            background: @volaires-green;
+                            color: #fff !important;
+                          }
+                        }
+                        .close-tab {
+                          position: relative;
+                          top: -10px;
+                          left: -4px;
+                          .fa-times-circle {
+                            color: @volaires-green;
+                            &:hover {
+                              color: @volaires-green-hover;
+                            }
+                          }
+                        }
+                        &:last-of-type {
+                          border: 0px;
+                        }
+                      }
+                      .tab-active {
+                        h4 {
+                          background: @volaires-green;
+                          color: #fff;
+                        }
+                      }
+                      .list-inline {
+                        margin-top: 5px;
+                      }
+                    }
+                  }
+
+                  .header-results {
+                    font-family: Larsseit-Med !important;
+                    margin: 20px -30px 0px !important;
+                    .search-form {
+                      .form-results {
+                        margin-left: 0px;
+                        padding: 0px;
+                        width: 100%;
+                        input {
+                          max-width: 100%;
+                          min-width: 100%;
+                          font-size: 15px;
+                          background: #fff !important;
+                          color: #363A3A !important;
+                          border-bottom: 1px solid #363A3A !important;
+                          font-family: Larsseit-Light !important;
+                        }
+                        img {
+                          width: 18px;
+                        }
+                        label {
+                          font-size: 11px;
+                          color: @volaires-green;
+                          float: left;
+                        }
+                        .datepicker {
+                          padding: 0px;
+                          input {
+                            border-radius: 0px !important;
+                            height: 27px;
+                            padding: 10px 0px 0px !important;
+                          }
+                          label {
+                            margin: 0px;
+                          }
+                        }
+                      }
+                      .col-sm-offset-1 {
+                       margin-left: 0%;
+                     }
+                     .input-group {
+                      display: block;
+                      .input-group-addon {
+                        display: none;
+                      }
+                    }
+                  }
+
+                  .filters {
+                    .ngrs-range-slider { 
+                      margin-bottom: 10px !important;
+                      box-shadow: none;
+                      border: 0px;
+                      .ngrs-runner {
+                        background: transparent url("@{url-images}slider.png") no-repeat;
+                        height: 5px;
+                        .ngrs-join {
+                          background: @volaires-yellow;
+                          margin-top: -3px;
+                          height: 5px;
+                        }
+                        .ngrs-handle {
+                          background: #6AA2B9;
+                          border-radius: 50%;
+                          height: 12px;
+                          width: 12px;
+                          border: 0px;
+                          height: 12px;
+                          top: -4px;
+                        }
+                      }
+                    }
+                    select {
+                      background: transparent url("@{url-images}caret_select.png") no-repeat;
+                      background-color: @volaires-red-second;
+                      border-color: @volaires-red-second;
+                      font-family: Larsseit-Med;
+                      background-position: right;
+                      -moz-appearance: none;
+                      -webkit-appearance: none;
+                      -o-appearance: none;
+                      appearance: none;
+                      border-radius: 0px;
+                      border-radius: 4px;
+                      padding: 0px 12px;
+                      margin-top: 10px;
+                      height: 22px;
+                      color: #fff;
+                      width: 100%;
+                      &:hover {
+                        background-color: @volaires-red;
+                        border-color: @volaires-red;
+                      }
+                    }
+                    .filters-hour {
+                      padding-top: 10px;
+                    }
+                    .filter-airlines {
+                      padding-right: 0px; 
+                    }
+                    .filter-scales {
+                      padding-left: 2px;
+                    }
+                    .range-min {
+                      float: left;
+                    }
+                    .range-max {
+                      float: right;
+                    }
+                    span {
+                      font-family: Larsseit-Light;
+                      font-size: 12px;
+                      color: #000;
+                    }
+                  }
+                }
+
+                .line {
+                  border-top: 1px solid #EAEDEC;
+                  text-align: center;
+                  margin-top: 5px;
+                  .fa-play {
+                    position: relative;
+                    color: #EAEDEC;
+                    top: -6px;
+                  }
+                }
+
+                .contRes {
+                  .col-results {
+                    .panel-default-res {
+                      min-height: 450px;
+                      border-color: #fff;
+                      margin-bottom: 0px !important;
+                      border: 0px;
+                      .panel-heading {
+                        background: #fff;
+                        padding: 5px 15px;
+                        border-color: #fff;
+                      }
+                      .loading {
+                        h3{
+                          font-family: Larsseit-Med;
+                          color: @volaires-blue;
+                          padding-top: 20px;
+                        }
+                        .alert {
+                          h4 {
+                            font-family: Larsseit-Med;
+                          }
+                          .btn-alert {
+                            border-color: @volaires-green;
+                            font-family: Larsseit-Light;
+                            background: @volaires-green;
+                            border-radius: 0px;
+                            font-size: 15px;
+                            color:#fff;
+                            &:hover {
+                              background: @volaires-green-hover;
+                              border-color: @volaires-green-hover;
+                            }
+                          }   
+                        }   
+                      }
+                      .panel_results{
+                        height : 450px;
+                        overflow : auto;
+                        .list {
+                          padding-left: 0px;
+                        }
+                        .panel-default {
+                          .panel-body {
+                            padding: 10px 0px 5px 0px;
+                            .box-agency {
+                              padding: 0px;
+                            }
+                          }
+                        }
+                      }
+                    }
+                    .panel-body-res {
+                      border-top-left-radius: 8px !important;
+                      background: @volaires-blue;
+                      padding: 0px !important;
+                      .prices  {
+                        font-family: Larsseit-Light;
+                        color: #fff;
+                        padding: 0px;
+                        label {
+                          color: #fff;
+                        }
+                        .info-fligth {
+                          border-top-left-radius: 8px !important;
+                          background: #2463B5;
+                          padding: 0px;
+                          .info {
+                            border-bottom: 2px solid @volaires-yellow;
+                            padding: 9px 0px 12px 0px;
+                            text-align: center;
+                            height: 37px;
+                            h5 {
+                              font-family: Larsseit-Med;
+                              line-height: 0;
+                            }
+                            h5 {
+                              font-size: 20px;
+                            }
+                          }
+                        }
+                        .lbprices {
+                          border-bottom: 2px solid #3F8BCB;
+                          padding: 11px 15px 7px 15px;
+                          margin-bottom: 0px;
+                          width: 100%;
+                          .fa-play {
+                            display: none;
+                          }
+                          &:hover {
+                            background: @volaires-blue-hover;
+                          }
+                        }
+                        a.active {
+                          .lbprices {
+                            background: @volaires-yellow;
+                            .fa-play {
+                              display: initial;
+                              float: right;
+                              position: relative;
+                              right: -25px;
+                              color: @volaires-yellow;
+                              z-index: 1;
+                            }
+                          }
+                        }
+                      }
+                      .col-10-results {
+                        background:#fff;
+                        padding: 0px;
+                        h4,h5,button,span {
+                          font-family: Larsseit-Light;
+                          color: @black-details;
+                          margin-bottom: 0px;
+                        }
+                        h4,h6 {
+                          font-family: Larsseit-Bold;
+                          color: @volaires-blue;
+                          font-size: 16px;
+                        }
+                        h5,h6 {
+                          font-size: 13.98px;
+                        }
+                        h4,h5,h6{
+                          margin-top: 2px;
+                          margin-bottom: 2px;
+                        }
+                        li {
+                          padding-right: 1px;
+                          padding-left: 1px;
+                          .division-scales {
+                            padding-right: 3px;
+                            padding-left: 3px;
+                          }
+                        }
+                        span {
+                          color: #929292;
+                          &.travel-time {
+                            font-size: 12px;
+                          }
+                        }
+                        .box-scales {
+                          span {
+                            color: @volaires-blue;
+                            position: absolute;
+                            font-size: 12px;
+                          }
+                          img {
+                            border-radius: 0px !important;
+                            width: 45px !important;
+                            height: 8px !important;
+                          }
+                          &.direct-flight {
+                            img {
+                              height: 2px !important;
+                            }
+                            span {
+                             padding-left: 3px;
+                             line-height: 0.5;
+                           }
+                         }
+                       }
+                       .total_price {
+                        text-align: center;
+                        margin: 10px 0px 5px 0px;
+                        .dotted {
+                          border-style: dotted none none;
+                          border-color: @volaires-yellow;
+                          border-width: 3px 0px 0px;
+                        }
+                        h5 {
+                          color: #0f557d;
+                          font-size: 15px;
+                          img {
+                            padding: 0px 7px;
+                            width: 38px;
+                          }
+                        }
+                        .fare-total_price {
+                          h4 {
+                            position: relative;
+                            margin-top: 0px;
+                            font-size: 16px;
+                            top: -6px;
+                          }
+                        }
+                        .departure-title {
+                          padding-left: 0px;
+                          .stretch {
+                            margin-bottom: 25px;
+                            font-family: Larsseit-Bold;
+                            span {
+                              font-family: Larsseit-Light;
+                              color: @volaires-blue;
+                              margin-left: 5px;
+                            }
+                          }
+                        }
+                      }
+                      .info-travel {
+                        color: @volaires-blue;
+                        span {
+                          font-family: Larsseit-Light;
+                          color: @volaires-blue;
+                          font-size: 12px;
+                        }
+                      }
+                      .range_group {
+                        background: #fff;
+                        .range {
+                          .panel{
+                            border-radius: 0px;
+                            background: #F6FAFD;
+                          }
+                        }
+                      }
+                      .panel_results {
+                        background: #fff;
+                      }
+                      img {
+                        height: 20px !important;
+                        width: 20px !important;
+                        border-radius: 50%;
+                      }
+                      .checkbox-details {
+                        position: absolute;
+                        left: -8px;
+                        top: 6px;
+                        input[type="checkbox"]:not(old) + label > span {
+                          border: 1px solid @volaires-blue;
+                          background: transparent !important;
+                          border-radius: 50%;
+                          height: 15px;
+                          width: 15px;
+                        }
+                        input[type=checkbox]:not(old):checked + label > span{
+                          background: @volaires-blue !important;
+                        }
+                        input[type=checkbox]:not(old) + label {
+                          margin-left  : -27px;
+                        }
+                        input[type="checkbox"]:checked:not(old) + label > span::before {
+                          position: relative;
+                          font-size: 12px;
+                          left: -2px;
+                          top: -2px;
+                        }
+                      }
+                      .btn-stretch {
+                        background:@volaires-blue;
+                        padding: 8px 10px 6px;
+                        border-radius: 0px;
+                        border-radius: 4px;
+                        margin: 0px 10px 6px 10px;
+                        text-align: center;
+                        opacity: 0.3;
+                        color: #fff;
+                        width: 46%;
+                        span {
+                          color:#fff;
+                        }
+                        &:hover {
+                          background:@volaires-blue-hover;
+                        }
+                        &.oneWay {
+                          text-align: center;
+                          width: 95%;
+                        }
+                        i {
+                          font-size: 20px;
+                          float: left;
+                        }
+                      }
+                      .current-stretch {
+                        background: #69D63C;
+                        opacity: 1;
+                      }
+                      .previous-stretch {
+                        background:@volaires-blue;
+                        opacity: 0.3;
+                      }
+                    }
+                  }
+                  .box-results {
+                    border-radius: 4px !important;
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                    border: 0px;
+                    &:hover {
+                      background: #EBF1F5 !important;
+                    }
+                  }
+                }
+              }
+            }
+
+
+        /********************
+              Modal Details
+              *********************/
+              .modal-dialog {
+                border: 6px solid #0e3455;
+                width: 92%;
+                .modal-content {
+                  background: #F9F9F9;
+                  border-radius: 0px;
+                  .modal-header {
+                    border-bottom: 0px;
+                    padding: 15px 15px 0px;
+                    .btn-primary {
+                      background-color: transparent;
+                      border-color: transparent;
+                      background-image: none;
+                      position: absolute;
+                      box-shadow: none;
+                      padding: 0px;
+                      right: 0px;
+                      top: 0px;
+                      img {
+                        width: 16px;
+                        opacity: 0.2;
+                      }
+                    }
+                    h3 {
+                      font-family: Larsseit-Light;
+                      color: @volaires-blue;
+                      font-size: 22px;
+                      margin: 0px;
+                    }
+                    h4  {
+                      font-family: Larsseit-Bold;
+                      color: @volaires-red;
+                      margin: 0px;
+                      font-size: 21px;
+                    }
+                    .logo {
+                      width: 165px;
+                    }
+                    .list-inline {
+                      border-bottom: 1px solid #EAEDEC;
+                      margin-bottom: 18px;
+                      padding-bottom: 15px;
+                      li:last-of-type {
+                        float: right;
+                      }
+                    }
+                  }
+                  .modal-body {
+                    padding-top: 5px;
+                    .detail {
+                      padding-left: 0px;
+                      .header-detail {
+                        background: #6FA6D7;
+                        border-radius: 4px;
+                        padding:0px 5px;
+                        h5  {
+                          font-family: Larsseit-Med;
+                          margin: 5px 0px 2px;
+                          font-size: 13px;
+                          color: #fff;
+                        }
+                      }
+
+                      .container-detail {
+                        box-shadow: 0px 3px 6px -6px #000;
+                        background: #fff;
+                        padding: 6px 10px;
+                        h4,h5,h6 {
+                          margin: 2px 0px !important;
+                          display: inline;
+                        }
+                        h5,.date-detail {
+                          border-bottom: 1px solid #EAEDEC;
+                          font-family: Larsseit-Light;
+                          margin: 0px 0px 7px 0px;
+                          font-size: 14px;
+                          color: #929292;
+                          margin-top: 0px;
+                        }
+                        .date-container {
+                          padding: 0px;
+                        }
+                        .info-details {
+                          padding: 0px !important;
+                          .col-info-deatil {
+                            padding: 0px;
+                            width: 100%;
+                            h4 {
+                              font-family: Larsseit-Light;
+                              color: @volaires-blue;
+                              font-size: 15px;
+                            }                       
+                            h6 {
+                              font-family: Larsseit-Med;
+                              color: @black-details;
+                              font-size: 14px;
+                              float: right;
+                            }
+                          }
+
+                        }
+                        .time-box,.img-air {
+                          padding: 0px;
+                          .time-fligth {
+                            margin-left: -5px !important;
+                            .time {
+                              padding: 0px;
+                              float: right;
+                            }
+                          }
+                          h4,h5 {
+                            font-family: Larsseit-Light;
+                            border-bottom: 0px;
+                            font-size: 13px;
+                            color: #929292;
+                          }
+                        }
+
+                        .img-air {
+                          position: absolute;
+                          float: right;
+                          right: 12px;
+                          top: 31px;
+                          img {
+                            height: 29px;
+                            width: 34px;
+                          }
+                          h4 {
+                            color:@black-details;
+                            font-size: 12px;
+                            display: block;
+                            line-height: 1;
+                            &.flight_number {
+                              color: #929292;
+                            }
+                          }
+                        }
+
+                        .list-inline {
+                          margin: 0px !important;
+                        }
+                      }
+
+                      .container-scales {
+                        background: url("@{url-images}detail_scales.png") no-repeat scroll center center;
+                        box-shadow: 0px 3px 6px -6px #000;
+                        background-color: #fff;
+                        margin-top: 7px;
+                        padding: 2px 15px;
+                        h4 {
+                          font-family: Larsseit-Light;
+                          color: @volaires-blue;
+                          margin: 5px 0px 2px 0px;
+                          font-size: 12px;
+                        }
+                        .col-xs-2,
+                        .col-xs-3,
+                        .col-xs-4,
+                        .col-xs-6 {
+                          padding: 0px; 
+                          h4 {
+                            font-weight: 700;
+                            font-size: 11px;
+                          }
+                          img {
+                            margin: 0px 6px;
+                          }
+                        }
+                      }
+                    }
+
+                    .purchase-button {
+                      border-left: 2px solid #BACDE3; 
+                      padding-left: 20px;
+                      h4 {
+                        font-family: Larsseit-Light;
+                        color: @volaires-blue;
+                        font-size: 20px;
+                        margin-top: 0px
+                      }
+                      h5 {
+                        font-family: Larsseit-Light;
+                        color: @black-details;
+                        font-size: 14px;
+                      }
+                      h4,h5 {
+                        margin-bottom: 15px;
+                      }
+                      button {
+                        background: @volaires-red-second;
+                        font-family: Larsseit-Med;
+                        padding: 7px 12px 5px 7px;
+                        border-radius: 0px;
+                        font-size: 20px;
+                        width: 100%;
+                        color: #fff;
+                        &:hover {
+                          border-color: @volaires-red;
+                        }
+                      }
+                      span {
+                        font-family: Larsseit-Med;
+                        background: url("@{url-images}/circle.png") no-repeat;
+                        background-size: cover;
+                        position: relative;
+                        font-size: 21px;
+                        padding: 10px;
+                        height: 41px;
+                        float: right;
+                        color: #fff;
+                        top: -11px;
+                      }
+                      img {
+                        padding-right: 17px;
+                        width: 42px;
+                      }
+
+                      #share_button {
+                        padding-right: 0px !important;
+                        margin-top: 5px !important;
+                        width: 100% !important;
+                        height: 42px;
+                      }
+                      .popover {
+                        margin: 30px 0px 0px 30px;
+                        border-color: #CDCDCC;
+                        background: #CDCDCC;
+                        border-radius: 0px;
+                        box-shadow: none;
+                        .popover-contet {
+                          font-family: Larsseit-Med !important;
+                        }
+                        .arrow {
+                          border-top-color: #CDCDCC;
+                          left: 72%;
+                          top: 74px;
+                          &::after {
+                            border-top-color: #CDCDCC;
+                          }
+                        }
+                      }
+                    }
+
+                    .margin-for-scales {
+                     margin-top: 145px !important;
+                   }
+
+                   .container-agencies {
+                    padding: 5px 10px;
+                    margin-top: 10px;
+                    h4 {
+                      margin-bottom: 5px !important;
+                      font-family: Larsseit-light;
+                      color: @volaires-blue;
+                      font-size: 19px;
+                    }
+                    .col-agency {
+                      padding-left: 0px;
+                    }
+                    .agency {
+                      box-shadow: 0px 5px 3px -6px #000;
+                      border: 1px solid #cececd;
+                      margin-top: 5px;
+                      padding: 12px;
+                      h5 {
+                        margin-bottom: 6px !important;
+                        font-family: Larsseit-Light;
+                        font-size: 14px;
+                        color: #58585b;
+                        &.total {
+                          span {
+                            font-size: 16px !important;
+                            font-family: Larsseit-Med;
+                            color: #231F20;
+                            float: right;
+                          }
+                        }
+                      }
+                      .fa-star {
+                        color: #f3c32a;
+                        float: right;
+                      }
+                      button {
+                        border-color: @volaires-blue;
+                        background: @volaires-blue;
+                        font-family: Larsseit-Med;
+                        border-radius: 0px;
+                        padding: 2px 12px;
+                        font-size: 16px;
+                        width: 100%;
+                        color: #FFF;
+                      }
+                      span.warranty {
+                        font-family: Larsseit-Med;
+                        position: absolute;
+                        font-size: 47px;
+                        color: #231F20;
+                        right: 36px;
+                        top: 7px;
+                      }
+                      img {
+                        margin-bottom: 5px;
+                        width: 120px;
+                        &.gav {
+                          width: 101px;
+                        }
+                      }
+                      &:hover {
+                        border-color: @volaires-red;
+                        button {
+                          border-color: @volaires-red;
+                          background: @volaires-red;
+                        }
+                        span.warranty {
+                          color: @volaires-red;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        /* Extra Small Devices, Phones */ 
+        @media only screen and (min-width : 480px) {
+          body {
+
+        /********************
+            container-index 
+            *********************/
+            .phrase {
+              h2,h3 {
+                font-size: 35px;
+              }
+            }
+
+          }
+        }
+
+        /* Small Devices, Tablets */
+        @media only screen and (min-width : 768px) {
+          body {
+
+        /********************
+            container-index 
+            *********************/
+            .initial-container {
+              .content_index {
+                padding: 100px 0px 135px 0px;
+                .search-form {
+                  .inputs-initial {
+                    .input-origin {
+                      label {
+                        margin: 5px 0px 0px 0px;
+                      }
+                    }
+                    .input-destination {
+                      label {
+                        margin: 5px 0px 0px 0px;
+                      }
+                    }
+                  }
+                  .cont-input-radio {
+                    label {
+                      font-size: 14px;
+                    }
+                  }
+                  .pass-pick-small-container {
+                    padding-left: 0px;
+                  }
+                }
+              }
+            }
+
+            .phrase {
+              padding-left: 0px !important;
+              h2 {
+                font-size: 33px;
+              }
+              h3 {
+                font-size: 27px;
+              }
+            }
+
+          }
+        }
+
+        /* Medium Devices, Desktops */
+        @media only screen and (min-width : 992px) {
+          body {
+
+        /********************
+            container-index 
+            *********************/
+            .initial-container {
+              .content_index {
+                .search-form {
+                  .datepicker {
+                    .cont-input-date-or {
+                      padding-left: 15px;
+                    }
+                    .cont-input-date-des {
+                      padding-right: 15px;
+                    } 
+                  }
+                  .inputs-initial input { 
+                    margin-bottom: 0px;
+                  }
+                  .passengers-picker {
+                    margin-top: 9px;
+                  }
+                  .dropdown-children {
+                    margin: 32px 0px 0px 15px;
+                  }
+                }
+
+                .phrase {
+                  h2 {
+                    font-size: 57px;
+                  }
+                }
+              }
+            }
+
+
+        /********************
+                Results
+                *********************/
+                .results {
+                  .header-results {
+                    .filters {
+                      .filters-hour {
+                        .filter-origin-hour,
+                        .filter-dest-hour {
+                          padding: 0px 5px;
+                        }
+                      }
+                    }
+
+                    .search-form {
+                      .form-results {
+                        .col-md-2 {
+                          width: 25%;
+                        }
+                      }
+                    }
+                  }
+                }
+
+        /********************
+              Modal Details
+              *********************/
+              .modal-dialog {
+                width: 75%;
+              }
+
+            }
+          }
+
+          /* Large Devices, Wide Screens */
+          @media only screen and (min-width : 1200px) {
+            .doots-details {
+              max-width: 672px !important;
+            }
+          }
+
+
+          @media (min-width: 992px) and (max-width: 1200px) {
+            .search-form .dropdown-toggle.btn-default {
+              width: 100% !important;
+            }
+          }
+
+          @media (min-width: 443px) and (max-width: 767px) {
+            .modal-dialog {
+              width: 54% !important;
+              margin: 30px auto;
+            }
+          }
+
+          @media (max-width: 285px) {
+            .navbar .container-fluid .navbar-header .navbar-brand img {
+              width: 180px;
+            }
+          }
+
+          @media (max-width: 768px) {
+            .btn-stretch {
+              width: 100% !important;
+            }
+          }
+
+          @media (max-width: 444px) {
+            .btn-stretch {
+              i {
+                display: none;
+              }
+              span {
+                font-weight: 700; 
+                font-size: 9px;
+              }
+            }
+          }

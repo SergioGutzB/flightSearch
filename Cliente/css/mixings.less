@@ -1,0 +1,82 @@
+  
+/********************
+   input type radio
+*********************/
+
+.input-radio() {
+
+  input[type=radio]:not(old),
+  input[type=checkbox]:not(old) {
+    width     : 2em;
+    margin    : 0;
+    padding   : 0;
+    font-size : 1em;
+    opacity   : 0;
+    cursor:pointer;
+  }
+
+  input[type=radio]:not(old) + label,
+  input[type=checkbox]:not(old) + label {
+    display      : inline-block;
+    margin-left  : -2em;
+    line-height  : 1.5em;
+  }
+
+  input[type=radio]:not(old) + label > span, 
+  input[type=checkbox]:not(old) + label > span {
+    display          : inline-block;
+    width            : 17px;
+    height           : 17px;
+    margin           : 0.25em 0.5em 0.25em 0em;
+    border           : 1px solid #fff;
+    background       : transparent !important;
+    vertical-align   : bottom;
+  }
+
+  input[type=radio      ]:not(old):checked + label > span,
+  input[type=checkbox   ]:not(old):checked + label > span {
+    background: #4373BD !important;
+  }
+
+  input[type=radio]:not(old):checked +  label > span:before,
+  input[type=checkbox]:not(old):checked +  label > span:before {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(100, 13, 32, .3);
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+    margin-left: 3px;
+  }
+}
+
+.ui-widget-content {
+  boder: 1px solid #fff !important;
+}
+
+.btn-search {
+    border-color: @volaires-yellow;
+    background: @volaires-red;
+    font-family: Larsseit-Med;
+    margin: 23px 0px 0px 0px;
+    border-radius: 0px;
+    border-radius: 50%;
+    border-width: 3px;
+    padding: 6px 0px;
+    font-size: 20px;
+    width: 100%;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    &:hover,&:active,&:focus {
+        box-shadow: 0px 0px 0px 80px rgba(0, 0, 0, 0.1) !important;
+        transition: box-shadow 600ms ease 0s;
+        border-color: @volaires-yellow-hover; 
+        background: @volaires-red-second;
+        color: #fff;
+    }
+    img {
+        width: 42px;
+        padding-bottom: 3px;
+    }
+}

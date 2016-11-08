@@ -1,0 +1,285 @@
+<div class="results">
+
+  <div class="row">
+    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+
+      <div class="row header-results">
+        <div class="com-xs-12 col-md-7" ng-include="'/angular/search_form.html'">
+
+        </div>
+
+        <div class="com-xs-12 col-md-5">
+          <div class="filters text-center">
+
+            <div class="filters-hour">
+              <div class="filter-origin-hour col-xs-12 col-sm-4">
+                <div range-slider min="0" max="24" model-min="currentStretch.schedule.departure.min" model-max="currentStretch.schedule.departure.max"></div>
+                <div class="range-min">
+                  <span>[[currentStretch.schedule.departure.min]]:00</span>
+                  <span ng-show="currentStretch.schedule.departure.min < 12">am</span>
+                  <span ng-show="currentStretch.schedule.departure.min >= 12">hrs</span>
+                </div>
+                <div class="range-max">
+                  <span>[[currentStretch.schedule.departure.max]]:00</span>
+                  <span ng-show="currentStretch.schedule.departure.max < 12">am</span>
+                  <span ng-show="currentStretch.schedule.departure.max >= 12">hrs</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 filter-airlines">
+              <div>
+                <select ng-model="currentStretch.airline" ng-options="airline.name for airline in currentStretch.airlines" ng-change="filter_fares()" class="form-control"><span class="fa fa-caret-down"></span>
+                  <option value="">Aerolineas</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 filter-scales">
+              <div>
+                <select ng-model="currentStretch.scale" ng-options="scale.value for scale in currentStretch.scales " ng-change="filter_fares()" class="form-control">
+                  <option value="">Sin escalas</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 line">
+          <i class="fa fa-play fa-rotate-90"></i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row" ng-if="returnTrip">
+    <div class="col-xs-12 col-lg-10 col-lg-offset-1 comparative-bars">
+
+      <div class="col-xs-12 col-sm-6 bar-left" ng-init="currentPageD=0">
+        <div>
+
+          <div class="row">
+            <ul class="chart-months row" style="width:[[width-10]]px;">
+              <li class="col-xs-1" ng-repeat="bar in months | startFrom:currentPageD*pageSize | limitTo:pageSize" class="">
+                <h5 class="info-bar" ng-class="{'active': bar == calendarData.departure[calendarData.depActive].month}">[[bar]]<br></h5>
+              </li>
+            </ul>
+          </div>
+
+          <div class="row">
+            <ul class="chart" style="width:[[width]]px; height:[[height]]px;">
+              <li ng-repeat="bar in calendarData.departure | startFrom:currentPageD*pageSize | limitTo:pageSize" class="bar" style="height:[[bar.value / calendarData.maxDep * height]]px; width:[[10]]px; left:[[$index / 17 * width]]px;" popover="[[bar.price | currency]] "
+                popover-trigger="mouseenter" ng-click="barClicked($index)" ng-class="{'current-date': $index == calendarData.depActive}"><br>
+                <h6 class="info-bar">[[bar.day]]<br>[[bar.weekday]]</h6>
+              </li>
+            </ul>
+          </div>
+
+          <div class="row btns">
+            <button class="previous" ng-click="barClicked(-1,0)"><i class="fa fa-chevron-left"></i></button>
+            <button class="next" ng-click="barClicked(-1,1)"><i class="fa fa-chevron-right"></i></button>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 bar-right">
+        <div>
+
+          <div class="row">
+            <ul class="chart-months row" style="width:[[width-10]]px;">
+              <li class="col-xs-1" ng-repeat="bar in months | startFrom:currentPageR*pageSize | limitTo:pageSize">
+                <h5 class="info-bar" ng-class="{'active': bar == calendarData.wayBack[calendarData.backActive].month}">[[bar]]<br></h5>
+              </li>
+            </ul>
+          </div>
+
+          <div class="row">
+            <ul class="chart" style="width:[[width]]px; height:[[height]]px;">
+              <li ng-repeat="bar in calendarData.wayBack | startFrom:currentPageR*pageSize | limitTo:pageSize" class="bar" style="height:[[bar.value / calendarData.maxRet * height]]px; width:[[10]]px; left:[[$index / 17 * width]]px;" popover="[[bar.price | currency]]"
+                popover-trigger="mouseenter" ng-click="barReturnClicked($index)" ng-class="{'current-date': $index == calendarData.backActive}"><br>
+                <h6 class="info-bar">[[bar.day]]<br>[[bar.weekday]]</h6>
+              </li>
+            </ul>
+          </div>
+
+          <div class="row btns">
+            <button class="previous"><i class="fa fa-chevron-left"></i></button>
+            <button class="next"><i class="fa fa-chevron-right"></i></button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" ng-if="returnTrip">
+        <div class="col-xs-12 col-md-10 col-md-offset-1 info-bars">
+          <div class="col-xs-12 col-sm-8 description">
+            <h6>[[ calendar[calendarData.depActive].departure_date | date: 'longDate' ]] - [[ calendar[calendarData.depActive].fares[calendarData.backActive].return_date | date: 'longDate' ]]</h6>
+            <h6 class="per-adult">Precio aproximado por adulto: [[ calendarData.wayBack[calendarData.backActive].value | currency]]</h6>
+          </div>
+          <div class="col-xs-12 col-sm-4 box-btn-change-search">
+            <button class="calendar-btn" ng-click="changeSearch()">Buscar En Estos Días</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="contRes">
+
+    <div class="row">
+
+      <div class="col-xs-12 col-lg-10 col-lg-offset-1 col-results">
+        <div class="panel panel-default panel-default-res" id="panel-default-res">
+
+          <span ng-model="loading"></span>
+
+          <div ng-switch on="loading">
+
+            <div class="text-center loading" ng-switch-when="true">
+              <h3>Cargando Resultados</h3>
+              <i class=" fa fa-spinner fa-spin fa-4x"></i>
+              <div class="row">
+                <div class="col-md-offset-4 col-xs-4">
+                  <alert ng-repeat="alert in alerts" type="[[alert.type]]" close="closeAlert($index)">
+                    <h4>[[alert.msg]]</h4>
+                    <a href="/volaires" class="btn btn-default btn-alert">Regresar</a>
+                  </alert>
+                </div>
+              </div>
+            </div>
+
+            <div ng-switch-when="false" class="panel-body panel-body-res">
+
+              <div class="row">
+
+                <div class="col-xs-4 col-sm-2 col-md-2 prices" du-scroll-container="scroll_results">
+                  <div class="col-xs-12 info-fligth">
+                    <div class="info">
+                      <h5>Precios</h5>
+                    </div>
+                  </div>
+                  <div class="list-prices">
+                    <a ng-href="#price-[[item.price]]" du-smooth-scroll du-scrollspy duration="1000" ng-repeat="item in currentStretch.prices" ng-click="set_min_price(item)">
+                      <label class="col-md-12 lbprices text-center">
+                        $[[item.price | number ]]
+                        <i class="fa fa-play"></i>
+                      </label>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col-xs-8 col-sm-10 col-md-10 col-10-results">
+
+                  <div class="row">
+                    <div class="col-md-offset-1 col-md-10">
+                      <button class="btn btn-default btn-stretch text-center" ng-repeat="stretch in stretchs" ng-click="go_to_stretch($index)" ng-class="{'current-stretch': $index <= currentStretchIndex,'previous-stretch': currentStretchIndex > $index, 'oneWay': stretchs.length == 1}"
+                        ng-disabled="currentStretchIndex < 1">
+                      <i class="fa fa-arrow-circle-down"></i> 
+                      <span ng-show="[[$index + 1]]== '1'">PRIMERO ELIGE TU VUELO DE IDA</span>
+                      <span ng-show="[[$index + 1]]== '2'">AHORA ELIGE TU VUELO DE VUELTA</span>
+                    </button>
+                    </div>
+                  </div>
+
+                  <div id="scroll_results" class="panel_results" ng-scroll-event="update($event, isEndEvent)">
+
+                    <div ng-show="currentStretch.visibleFares.length == 0">
+                      <div class="row">
+                        <div class="col-xs-12 text-center">
+                          <h5>No existen Tiquetes disponibles con estos filtros</h5>
+                          <h6>Por favor ajuste los filtros</h6>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="results" class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10">
+                      <div ng-attr-id="price-[[item.price]]" ng-repeat="item in currentStretch.prices">
+
+                        <div ng-init="fares_by_price=get_fares_by_price($index)" class="row">
+
+                          <div class="range" ng-if="fares_by_price.length > 0" ng-repeat="fare in fares_by_price">
+
+                            <div class="col-md-12 total_price" ng-show="0 == $index">
+                              <div class="col-xs-1 col-sm-5 dotted"></div>
+                              <div class="col-xs-8 col-sm-2 fare-total_price">
+                                <h4>$[[fare.amount | number ]]</h4>
+                              </div>
+                              <div class="col-xs-1 col-sm-5 dotted"></div>
+                            </div>
+
+                            <div class="col-sm-6" ng-class="{'col-sm-6 col-md-6': fare.return}">
+                              <div class="checkbox-details">
+                                <input type="checkbox" ng-model="checked" ng-click="process_selection(fare)" ng-blur="checked=false"><label for="details"><span><span></span></span></label>
+                              </div>
+                              <div class="panel panel-default box-results" ng-click="process_selection(fare)">
+                                <div class="panel-body">
+                                  <div class="row">
+
+                                    <div class="col-xs-12 col-sm-12">
+                                      <ul class="list-inline">
+                                        <li>
+                                          <img ng-src="/static/[[fare.departure.airline.icon]]" popover="[[fare.departure.airline.name]]" popover-trigger="mouseenter">
+                                        </li>
+                                        <li>
+                                          <h5>[[fare.origin_city]]</h5>
+                                        </li>
+                                        <li>
+                                          <h6 popover="[[fare.departure.departure_date | date: 'EEEE d, MMMM' ]]" popover-trigger="mouseenter">[[fare.departure.departure_date | date: 'HH:mm']]</h6>
+                                        </li>
+                                        <li class="division-scales">
+                                          <div ng-show="fare.departure.scales == 0" class="box-scales direct-flight">
+                                            <img src="../images/direct_flight.png" alt="escalas"><br>
+                                            <span>directo</span>
+                                          </div>
+                                          <div ng-show="fare.departure.scales == 1" class="box-scales">
+                                            <img src="../images/scales.png" alt="escalas"><br>
+                                            <span class="scales">[[fare.departure.scales]] escala</span>
+                                          </div>
+                                          <div ng-show="fare.departure.scales == 2" class="box-scales">
+                                            <img src="../images/two_scales.png" alt="escalas"><br>
+                                            <span class="scales">[[fare.departure.scales]] escalas</span>
+                                          </div>
+                                          <div ng-show="fare.departure.scales == 3" class="box-scales">
+                                            <img src="../images/three_scales.png" alt="escalas"><br>
+                                            <span class="scales">[[fare.departure.scales]] escalas</span>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <h5>[[fare.destination_city]]</h5>
+                                        </li>
+                                        <li>
+                                          <h6 popover="[[fare.departure.arrival_date | date: 'EEEE d, MMMM' ]]" popover-trigger="mouseenter">[[fare.departure.arrival_date | date: 'HH:mm']]</h6>
+                                        </li>
+                                        <li>
+                                          <span class="travel-time">[[fare.departure.travel_time]]</span>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
