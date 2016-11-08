@@ -146,6 +146,17 @@ angular
           }
         })
         return global
+      },
+      getTime: function(destination, departure_date) {
+        global = $http({
+          method: 'POST',
+          url: 'http://127.0.0.1:3000/clima_actual/',
+          data: {
+            ciudad: destination,
+            fecha: departure_date,
+          }
+        })
+        return global
       }
     }
   }])

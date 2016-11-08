@@ -1,21 +1,31 @@
 var express = require('express'),
-    app = express();
+  app = express();
 
-function pronostico(fecha){
-  return Math.floor(Math.random()*(100 - 0)) ;
+var allowCrossDomain = function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  next()
 }
 
-var clima = function(lugar, fecha){
-  var base = { 
-    'bogota': {
+app.use(allowCrossDomain)
+
+function pronostico(fecha) {
+  return Math.floor(Math.random() * (100 - 0));
+}
+
+var clima = function(lugar, fecha) {
+  var base = {
+    'BOG': {
       'temperatura': pronostico(fecha),
       'humedad': pronostico(fecha),
     },
-    'medellin': {
+    'MIA': {
       'temperatura': pronostico(fecha),
       'humedad': pronostico(fecha),
     },
-    'ciudad de mexico': {
+    'CLO': {
       'temperatura': pronostico(fecha),
       'humedad': pronostico(fecha),
     },
@@ -28,22 +38,21 @@ var clima = function(lugar, fecha){
 
 };
 //RAIZ DE VISITA DEL SITIO
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
   res.send('Hola accede a /clima para saber el clima de un lugar')
 })
 
 //PETICION PARA VER EL CLIMA ACTUAL DE UN SITIO
-app.get('/clima_actual', function(req, res){
+app.get('/clima_actual', function(req, res) {
   res.send('Debes enviar una peticion POST con el parametro ciudad con el nombre de la ciudad')
 });
 
-app.post('/clima_actual', function(req, res){
+app.post('/clima_actual', function(req, res) {
   var data = clima(req['query']['ciudad'], req['query']['fecha']);
   res.end(JSON.stringify(data));
 });
 
 //SE ESCUCHA PARA SERVIR
-app.listen(3000, function () {
+app.listen(3000, function() {
   console.log('Example app listening on port 3000!')
 })
-

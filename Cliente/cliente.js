@@ -47,16 +47,6 @@ app.post('/search', function(req, res) {
   console.log("Petición SOAP realizada!")
 })
 
-app.get('/test', function(req, res) {
-  console.log("test");
-  res.json({ success: true });
-});
-
-app.post('/test', function(req, res) {
-  console.log("test");
-  res.json({ success: true });
-});
-
 
 /*--------------------Routing Over----------------------------*/
 app.listen(3001, function() {

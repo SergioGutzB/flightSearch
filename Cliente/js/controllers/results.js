@@ -85,28 +85,15 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
       $scope.loading = false
       console.log($scope.fares_by_price, $scope.fares_by_price.lenght)
 
-    })
 
-  // $fare.search($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 },
-  //   function(err) {
-  //     if (!err) {
 
-  //       $scope.loading = false
-  //       next()
-  //     } else {
+    });
 
-  //       $scope.alerts = [
-  //         { type: 'info', msg: 'Lo sentimos! en este momento no existen vuelos disponibles, por favor intenta en unos minutos.' }
-  //       ]
+  $fare.getTime($rp.destination, $filter('date')($rp.departure, 'yyyy-MM-dd'))
+    .then(function(res) {
+      console.log(res)
+    });
 
-  //       $scope.closeAlert = function(index) {
-  //         $scope.alerts.splice(index, 1)
-  //       }
-  //     }
-  //   })
-
-  // @TODO: Uncomment the next line when calendar be available
-  // get_calendar(null,$rp.departure)
 
   var filter = $filter('filter')
   var orderBy = $filter('orderBy')
