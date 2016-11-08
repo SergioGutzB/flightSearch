@@ -1,0 +1,87 @@
+{
+  "fares": [{
+      "destination_city": "MIA",
+      "origin_city": "BOG",
+      "price": 923660,
+      "departure": {
+        "airline": {
+          "name": "LAN Airlines",
+          "icon": "GDSBackend/img/LA.png"
+        },
+        "arrival_date": "Thu Dec 22 2016 19:07:00 GMT-0500 (COT)",
+        "departure_date": "Thu Dec 22 2016 10:29:00 GMT-0500 (COT)",
+        "travel_time": "4:58"
+      }
+    },
+    {
+      "destination_city": "MIA",
+      "origin_city": "BOG",
+      "price": 1118100,
+      "departure": {
+        "airline": {
+          "name": "United Airlines",
+          "icon": "GDSBackend/img/UA.png"
+        },
+        "arrival_date": "Fri Dec 23 2016 01:26:00 GMT-0500 (COT)",
+        "departure_date": "Thu Dec 22 2016 21:37:00 GMT-0500 (COT)",
+        "travel_time": "3:49"
+      }
+    },
+    {
+      "destination_city": "MIA",
+      "origin_city": "BOG",
+      "price": 1023420,
+      "departure": {
+        "airline": {
+          "name": "LAN Airlines",
+          "icon": "GDSBackend/img/LA.png"
+        },
+        "arrival_date": "Thu Dec 22 2016 12:21:00 GMT-0500 (COT)",
+        "departure_date": "Thu Dec 22 2016 05:00:00 GMT-0500 (COT)",
+        "travel_time": "4:57"
+      }
+    },
+    {
+      "destination_city": "BOG",
+      "origin_city": "MIA",
+      "price": 763800,
+      "departure": {
+        "airline": {
+          "name": "Unknown",
+          "icon": "GDSBackend/img/$$.png"
+        },
+        "arrival_date": "Wed Jan 18 2017 23:15:00 GMT-0500 (COT)",
+        "departure_date": "Wed Jan 18 2017 11:35:00 GMT-0500 (COT)",
+        "travel_time": "8:5"
+      }
+    },
+    {
+      "destination_city": "BOG",
+      "origin_city": "MIA",
+      "price": 973000,
+      "departure": {
+        "airline": {
+          "name": "Avianca",
+          "icon": "GDSBackend/img/AV.png"
+        },
+        "arrival_date": "Thu Jan 19 2017 00:01:00 GMT-0500 (COT)",
+        "departure_date": "Wed Jan 18 2017 17:10:00 GMT-0500 (COT)",
+        "travel_time": "5:35"
+      }
+    },
+    {
+      "destination_city": "BOG",
+      "origin_city": "MIA",
+      "price": 671800,
+      "departure": {
+        "airline": {
+          "name": "American Airlines",
+          "icon": "GDSBackend/img/AA.png"
+        },
+        "arrival_date": "Wed Jan 18 2017 13:31:00 GMT-0500 (COT)",
+        "departure_date": "Wed Jan 18 2017 09:50:00 GMT-0500 (COT)",
+        "travel_time": "5:35"
+      }
+    }
+  ]
+}
