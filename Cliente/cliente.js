@@ -16,6 +16,7 @@ app.use(allowCrossDomain)
 app.use(express.static(__dirname + '/'))
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/templates', express.static(__dirname + '/templates'));
+app.use('/css', express.static(__dirname + '/css'));
 
 /*--------------------SOAP CLIENT----------------------------*/
 
@@ -36,21 +37,38 @@ var args = {
 /*------------------Routing Started ------------------------*/
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/base.html')
-})
+    res.sendFile('base.html', { root: __dirname + "/" });
+  })
+  // app.all('/*', function(req, res, next) {
+  //   res.sendFile('base.html', { root: __dirname + "/" });
+  // });
 
 app.post('/search', function(req, res) {
+  console.log("post search")
   var args = req.body.args
   var result = null;
   soap.createClient(url, function(err, client) {
     if (err) throw err
     console.log(client.describe().FlightService.fares)
-    client.Search(args, function(err, res) {
-      if (err) throw err
-      result = res;
+    client.Search(args, function(err, response) {
+      if (err) throw ErrorConstructor
+      res.send({ success: true, result: response })
+      return
     })
   })
+  console.log("Petición SOA realizada!")
 })
+
+app.get('/test', function(req, res) {
+  console.log("test");
+  res.json({ success: true });
+});
+
+app.post('/test', function(req, res) {
+  console.log("test");
+  res.json({ success: true });
+});
+
 
 /*--------------------Routing Over----------------------------*/
 app.listen(3001, function() {

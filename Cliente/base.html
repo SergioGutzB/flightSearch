@@ -6,17 +6,16 @@
   <title></title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0 initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="icon" type="image/png" href="./images/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96">
   <!--<link href="css/style.css" rel="stylesheet">-->
-  <link href="/css/bootstrap.min.css">
-  <link href="/css/bootstrap-theme.min.css">
-  <link href="/css/styles.css">
-  <link href="/css/estilo.css">
-  <link href="/css/jquery-ui.min.css">
-  <link href="/css/font-awesome.min.css">
-  <link href="/css/angucomplete-alt.css">
-  <link href="/css/angular.rangeSlider.css">
-  <link href="/css/angular-material.min.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/jquery-ui.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/angucomplete-alt.css">
+  <link rel="stylesheet" href="/css/angular.rangeSlider.css">
+  <link rel="stylesheet" href="/css/angular-material.min.css">
 </head>
 
 <body ng-app="clienteAPP" id="body">
@@ -33,25 +32,20 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-              <a class="navbar-brand" href="/flighSearch"><img class="img-responsive" src="./images/logo_modal.png"></a>
+              <a class="navbar-brand" href="/"><img class="img-responsive" src="/images/logo_modal.png"></a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-left" id="nav">
-                <li><a ng-class="getClass('/volaires')" href="/flighSearch">TIQUETES</a></li>
+                <li><a ng-class="getClass('/volaires')" href="/">TIQUETES</a></li>
                 <li class="divider-vertical"></li>
-                <li><a ng-class="getClass('/hoteles')" href="/hoteles">HOTELES</a></li>
+                <li><a ng-class="getClass('/hoteles')" href="/">TIEMPO</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="#">PLANES</a></li>
-                <li class="divider-vertical"></li>
-                <li><a href="#">VUELO + HOTEL</a></li>
-                <li class="divider-vertical"></li>
-                <li><a ng-class="getClass('/carros')" href="/carros">CARROS</a></li>
               </ul>
 
               <ul class="nav navbar-nav navbar-right">
                 <li>
-                  <a href="/" class="login">INGRESO <img src="./images/login.png" alt="origin"></a>
+                  <a href="/" class="login">INGRESO <img src="/images/login.png" alt="origin"></a>
                 </li>
               </ul>
             </div>
@@ -69,42 +63,44 @@
     </div>
   </div>
 
-  <script src="./js/jquery-1.11.1.min.js"></script>
-  <script src="./js/jquery-ui.min.js"></script>
-  <script src="./js/bootstrap.min.js"></script>
+  <script src="/js/jquery-1.11.1.min.js"></script>
+  <script src="/js/jquery-ui.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 
 
-  <script src="./js/angular.min.js"></script>
-  <script src="./js/angular-route.min.js"></script>
-  <script src="./js/angular-locale_es-co.min.js"></script>
-  <script src="./js/angular-touch.min.js"></script>
-  <script src="./js/angucomplete-alt.min.js"></script>
-  <script src="./js/ui-bootstrap-tpls-0.12.0.min.js"></script>
+  <script src="/js/angular.min.js"></script>
+  <script src="/js/angular-route.min.js"></script>
+  <script src="/js/angular-locale_es-co.min.js"></script>
+  <script src="/js/angular-touch.min.js"></script>
+  <script src="/js/angucomplete-alt.min.js"></script>
+  <script src="/js/ui-bootstrap-tpls-0.12.0.min.js"></script>
 
-  <script src="./js/angular-scrollevents.min.js"></script>
-  <script src="./js/angular-scroll.min.js"></script>
-  <script src="./js/angular.rangeSlider.min.js"></script>
-
-
-  <script src="./js/angular-animate.min.js"></script>
-  <script src="./js/angular-aria.min.js"></script>
-  <script src="./js/angular-messages.min.js"></script>
+  <script src="/js/angular-scrollevents.min.js"></script>
+  <script src="/js/angular-scroll.min.js"></script>
+  <script src="/js/angular.rangeSlider.min.js"></script>
 
 
-  <script src="./js/app.js"></script>
-  <script src="./js/routes.js"></script>
+  <script src="/js/angular-animate.min.js"></script>
+  <script src="/js/angular-aria.min.js"></script>
+  <script src="/js/angular-messages.min.js"></script>
 
-  <script src="./js/controllers/index.js"></script>
-  <script src="./js/controllers/navbar-controller.js"></script>
 
-  <script src="./js/services/fareService.js"></script>
-  <script src="./js/services/iataService.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/routes.js"></script>
 
-  <script src="./js/directives/datepicker.js"></script>
-  <script src="./js/directives/purchase-directive.js"></script>
-  <script src="./js/directives/passengers-picker.js"></script>
+  <script src="/js/controllers/index.js"></script>
+  <script src="/js/controllers/results.js"></script>
+  <script src="/js/controllers/navbar-controller.js"></script>
 
-  <script src="./js/directives/background.js"></script>
+  <script src="/js/services/fareService.js"></script>
+  <script src="/js/services/iataService.js"></script>
+  <script src="/js/services/comparativeBarsService.js"></script>
+
+  <script src="/js/directives/datepicker.js"></script>
+  <script src="/js/directives/purchase-directive.js"></script>
+  <script src="/js/directives/passengers-picker.js"></script>
+
+  <script src="/js/directives/background.js"></script>
 
 
 </body>

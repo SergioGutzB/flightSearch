@@ -25,7 +25,7 @@ angular
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: '../../templates/datepicker.html',
+      templateUrl: '/templates/datepicker.html',
       scope: {
         departure: "=",
         return: "=",

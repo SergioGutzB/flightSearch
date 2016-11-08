@@ -1,25 +1,23 @@
 <div class="text-center col-xs-12 col-md-4 form datepicker" dep="dep" arr="arr">
-    <div class="n-days">
-        <span id="days" ng-class="{'hid': !showReturn, 'days': departure && return}">[[getDays()]]</span>
-    </div>
+  <div class="n-days">
+    <span id="days" ng-class="{'hid': !showReturn, 'days': departure && return}">{{getDays()}}</span>
+  </div>
 
-    <div class="col-xs-12 col-sm-offset-0 col-sm-6 cont-input-date-or">
-        <label ng-hide="index_location == '/hoteles/'">SALIDA</label>
-        <label ng-hide="index_location != '/hoteles/'">LLEGADA</label>
-        <div class="input-group">
-            <input type="text" class="form-control input_date_start" name="departure_date" id="departure_date" readonly>
-            <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
-        </div>
+  <div class="col-xs-12 col-sm-offset-0 col-sm-6 cont-input-date-or">
+    <label ng-hide="index_location == '/hoteles/'">SALIDA</label>
+    <label ng-hide="index_location != '/hoteles/'">LLEGADA</label>
+    <div class="input-group">
+      <input type="text" class="form-control input_date_start" name="departure_date" id="departure_date" readonly>
+      <div class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
     </div>
+  </div>
 
-    <div class="col-xs-12 col-sm-offset-0 col-sm-6 cont-input-date-des">
-        <label ng-class="{'hid': !showReturn}" ng-hide="index_location == '/hoteles/'">REGRESO</label>
-        <label ng-class="{'hid': !showReturn}" ng-hide="index_location != '/hoteles/'">SALIDA</label>
-        <div class="input-group">
-            <input type="text" class="form-control input_date_end" name="return_date" id="return_date" ng-class="{'hid': !showReturn}" ng-disabled="!showReturn" readonly>
-            <div class="input-group-addon" ng-class="{'hid': !showReturn}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
-        </div>
+  <div class="col-xs-12 col-sm-offset-0 col-sm-6 cont-input-date-des">
+    <label ng-class="{'hid': !showReturn}" ng-hide="index_location == '/hoteles/'">REGRESO</label>
+    <label ng-class="{'hid': !showReturn}" ng-hide="index_location != '/hoteles/'">SALIDA</label>
+    <div class="input-group">
+      <input type="text" class="form-control input_date_end" name="return_date" id="return_date" ng-class="{'hid': !showReturn}" ng-disabled="!showReturn" readonly>
+      <div class="input-group-addon" ng-class="{'hid': !showReturn}"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
     </div>
+  </div>
 </div>
-
-

@@ -42,7 +42,7 @@ angular
       };
 
       $http
-        .get('../../json/iata.min.json')
+        .get('/json/iata.min.json')
         .success(function(data) {
           airports = data.airport_codes;
           callback(airports);

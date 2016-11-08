@@ -400,7 +400,7 @@
    		footer
 	*********************/
   footer {
-    background: url("images/mapa.png") no-repeat;
+    background: url("/images/mapa.png") no-repeat;
     background-position: bottom;
     background-color: #3286C4;
     transition-duration: 2s, 2s;
@@ -460,7 +460,7 @@
 /* Large Devices, Wide Screens */
 @media (max-width: 964px) {
   footer {
-    background: url("images/mapa2.png") no-repeat;
+    background: url("/images/mapa2.png") no-repeat;
     background-position: bottom;
     background-color: #3286C4;
     background-size: 100%;
@@ -468,7 +468,7 @@
 }
 @media (max-width: 480px) {
   footer {
-    background: #3286C4 url("images/mapa2.png") no-repeat scroll center bottom / 212% auto;
+    background: #3286C4 url("/images/mapa2.png") no-repeat scroll center bottom / 212% auto;
   }
 }
 @media only screen and (min-width: 455px) and (max-width: 767px) {
@@ -677,7 +677,7 @@
     background: #edeced !important;
   }
   body .purchase .container-general .container-purchase .panel-default select {
-    background: url("images/arrow_select.png") no-repeat center right;
+    background: url("/images/arrow_select.png") no-repeat center right;
     background-color: #edeced;
     font-family: Larsseit-Light;
     -moz-appearance: none;
@@ -690,7 +690,7 @@
     box-shadow: none;
   }
   body .purchase .container-general .container-purchase .panel-default select.ng-untouched {
-    background: #EDECED url("images/arrow_select.png") no-repeat scroll right center !important;
+    background: #EDECED url("/images/arrow_select.png") no-repeat scroll right center !important;
   }
   body .purchase .container-general .container-purchase .panel-default label {
     font-family: Larsseit-Light;
@@ -1182,7 +1182,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
     color: #2463B5;
   }
   body .initial-container .container-index.container-ticket {
-    background: url("images/ticket_background.jpg") no-repeat;
+    background: url("/images/ticket_background.jpg") no-repeat;
     background-size: cover;
   }
   body .initial-container .content_index {
@@ -1256,7 +1256,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
     top: -5px;
   }
   body .initial-container .content_index .search-form .datepicker .n-days #days {
-    background: url("images//n_days.png") no-repeat;
+    background: url("/images//n_days.png") no-repeat;
     padding: 4px 0px 12px 0px;
     top: 7px;
     left: 287px;
@@ -1292,7 +1292,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
   }
   body .initial-container .content_index .search-form .dropdown_passengers,
   body .initial-container .content_index .search-form .open > .dropdown-toggle.btn-default {
-    background: url("images/caret.png") no-repeat;
+    background: url("/images/caret.png") no-repeat;
     background-color: #3c80bc;
     border-color: #3c80bc;
     background-position: right;
@@ -1427,11 +1427,11 @@ input[type=checkbox]:not(old):checked + label > span:before {
     margin-bottom: 0px;
   }
   body .initial-container .content_index .box-search {
-    background: url("images/box.png") repeat scroll 0% 0%;
+    background: url("/images/box.png") repeat scroll 0% 0%;
     padding-top: 8px;
   }
   body .initial-container .container-ticket {
-    background: url("images/ticket_background.jpg") no-repeat !important;
+    background: url("/images/ticket_background.jpg") no-repeat !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: center bottom !important;
@@ -1447,13 +1447,13 @@ input[type=checkbox]:not(old):checked + label > span:before {
     width: 13px;
   }
   body .ui-datepicker .ui-widget-header .ui-icon.ui-icon-circle-triangle-w {
-    background: transparent url("images/triangle_datepicker.png");
+    background: transparent url("/images/triangle_datepicker.png");
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     rotation: 180deg;
   }
   body .ui-datepicker .ui-widget-header .ui-icon.ui-icon-circle-triangle-e {
-    background: transparent url("images/triangle_datepicker.png");
+    background: transparent url("/images/triangle_datepicker.png");
   }
   body .ui-datepicker .ui-widget-header .ui-datepicker-prev,
   body .ui-datepicker .ui-widget-header .ui-datepicker-next {
@@ -1488,7 +1488,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
   body .ui-datepicker .ui-datepicker-calendar .ui-state,
   body .ui-datepicker .ui-datepicker-calendar .ui-state-hover,
   body .ui-datepicker .ui-datepicker-calendar .ui-state-highlight {
-    background: url("images/circle_datepicker.png") no-repeat scroll 50% 50%;
+    background: url("/images/circle_datepicker.png") no-repeat scroll 50% 50%;
     font-family: Larsseit-Light;
     font-weight: 700 !important;
     color: #fff !important;
@@ -1619,7 +1619,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
     border: 0px;
   }
   body .results .header-results .filters .ngrs-range-slider .ngrs-runner {
-    background: transparent url("images/slider.png") no-repeat;
+    background: transparent url("/images/slider.png") no-repeat;
     height: 5px;
   }
   body .results .header-results .filters .ngrs-range-slider .ngrs-runner .ngrs-join {
@@ -1636,7 +1636,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
     top: -4px;
   }
   body .results .header-results .filters select {
-    background: transparent url("images/caret_select.png") no-repeat;
+    background: transparent url("/images/caret_select.png") no-repeat;
     background-color: #F64444;
     border-color: #F64444;
     font-family: Larsseit-Med;
@@ -2120,7 +2120,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
     margin: 0px !important;
   }
   body .modal-dialog .modal-content .modal-body .detail .container-scales {
-    background: url("images/detail_scales.png") no-repeat scroll center center;
+    background: url("/images/detail_scales.png") no-repeat scroll center center;
     box-shadow: 0px 3px 6px -6px #000;
     background-color: #fff;
     margin-top: 7px;
@@ -2184,7 +2184,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
   }
   body .modal-dialog .modal-content .modal-body .purchase-button span {
     font-family: Larsseit-Med;
-    background: url("images//circle.png") no-repeat;
+    background: url("/images//circle.png") no-repeat;
     background-size: cover;
     position: relative;
     font-size: 21px;

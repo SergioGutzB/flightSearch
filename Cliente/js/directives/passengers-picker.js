@@ -5,7 +5,7 @@ angular
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: '../../templates/passengers_picker.html',
+      templateUrl: '/templates/passengers_picker.html',
       scope: {
         passengers: "=",
         max: "@",

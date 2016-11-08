@@ -1,30 +1,25 @@
-var clienteAPP = angular.module('clienteAPP');
-
-clienteAPP.config(function($interpolateProvider) {
-  $interpolateProvider.startSymbol('[[');
-  $interpolateProvider.endSymbol(']]');
-});
+var clienteAPP = angular.module('clienteAPP')
 
 clienteAPP.run(function($rootScope, $location) {
   $rootScope.$on('duScrollspy:becameActive', function($event, $element) {
-    var id = $element[0].href.split('#')[1];
+    var id = $element[0].href.split('#')[1]
 
-    angular.element(document.getElementById(id)).addClass('range_group');
-    angular.element(document.getElementById("footer")).addClass('hid');
-  });
+    angular.element(document.getElementById(id)).addClass('range_group')
+    angular.element(document.getElementById('footer')).addClass('hid')
+  })
 
   $rootScope.$on('duScrollspy:becameInactive', function($event, $element) {
-    var id = $element[0].href.split('#')[1];
+    var id = $element[0].href.split('#')[1]
 
-    angular.element(document.getElementById(id)).removeClass('range_group');
-  });
-});
+    angular.element(document.getElementById(id)).removeClass('range_group')
+  })
+})
 
 clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routeParams', '$scope', '$modal', '$timeout', 'stretch', 'bars', '$location', '$window', function($http, $filter, $fare, $iata, $rp, $scope, $modal, $timeout, $stretch, $bars, $location, $window) {
-  $scope.flight_option = $rp.return ? 'roundTrip' : 'oneWay';
+  $scope.flight_option = $rp.return ? 'roundTrip' : 'oneWay'
 
-  $scope.loading = true;
-  $scope.returnTrip = false;
+  $scope.loading = true
+  $scope.returnTrip = false
   $scope.calendarData = {
     departure: [],
     wayBack: [],
@@ -32,79 +27,87 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
     backActive: -1,
     maxDep: 0,
     maxRet: 0
-  };
-
-  $scope.currentPageD, $scope.currentPageR = 0;
-  $scope.pageSize = 20;
-  $scope.max = 0;
-
-  var w = angular.element($window);
-  $scope.width = (w.width() - (w.width() * 30 / 100)) / 2;
-  $scope.height = 100;
-
-  $fare.search($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 },
-    function(err) {
-      if (!err) {
-
-        $scope.loading = false;
-        next();
-      } else {
-
-        $scope.alerts = [
-          { type: 'info', msg: 'Lo sentimos! en este momento no existen vuelos disponibles, por favor intenta en unos minutos.' }
-        ];
-
-        $scope.closeAlert = function(index) {
-          $scope.alerts.splice(index, 1);
-        };
-      }
-    });
-
-  function get_calendar(index, departure_date) {
-    if ($rp.return) {
-      $fare.calendar($rp.origin, $rp.destination, departure_date,
-        function(data) {
-
-          var w = angular.element($window);
-
-          if (data) {
-            $scope.returnTrip = true;
-            $scope.calendar = data.slice(0, 17);
-
-            if (w.width() < 768) {
-              $scope.width = w.width() - 60;
-            };
-            if (w.width() >= 768 && w.width() < 992) {
-              $scope.width = (w.width() - 100) / 2;
-            };
-            drawCalendar(index);
-          } else {
-            console.log('error');
-          }
-        });
-    }
   }
+  $scope.currentStretch = {
+    prices: [],
+    visibleFares: -1
+  }
+  $scope.fares_by_price = []
+
+  $scope.currentPageD, $scope.currentPageR = 0
+  $scope.pageSize = 20
+  $scope.max = 0
+
+  var w = angular.element($window)
+  $scope.width = (w.width() - (w.width() * 30 / 100)) / 2
+  $scope.height = 100
+
+  $fare.searchFare($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 })
+    .then(function(res) {
+      
+      $scope.fares = res.data.result
+      console.log($scope.fares)
+      $scope.stretchs = 1
+      for (index in $scope.fares) {
+        $scope.currentStretch.prices.push($scope.fares[index].price)
+      }
+      if ($scope.currentStretch.prices.length == 0)
+        $scope.currentStretch.visibleFares = {}
+      else
+        for (index in $scope.fares) {
+          $scope.fares_by_price.push($scope.fares[index])
+        }
+
+      $scope.fares_by_price.forEach(function(fare) {
+        if (fare.departure) {
+          fare.departure.departure_date = new Date(fare.departure.departure_date)
+          fare.departure.arrival_date = new Date(fare.departure.arrival_date)
+        } else if (fare.return) {
+          fare.return.departure_date = new Date(fare.return.departure_date)
+          fare.return.arrival_date = new Date(fare.return.arrival_date)
+        }
+      })
+      $scope.loading = false
+      console.log($scope.fares_by_price, $scope.fares_by_price.lenght)
+    })
+
+  // $fare.search($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 },
+  //   function(err) {
+  //     if (!err) {
+
+  //       $scope.loading = false
+  //       next()
+  //     } else {
+
+  //       $scope.alerts = [
+  //         { type: 'info', msg: 'Lo sentimos! en este momento no existen vuelos disponibles, por favor intenta en unos minutos.' }
+  //       ]
+
+  //       $scope.closeAlert = function(index) {
+  //         $scope.alerts.splice(index, 1)
+  //       }
+  //     }
+  //   })
 
   // @TODO: Uncomment the next line when calendar be available
-  //get_calendar(null,$rp.departure);
+  // get_calendar(null,$rp.departure)
 
-  var filter = $filter('filter');
-  var orderBy = $filter('orderBy');
+  var filter = $filter('filter')
+  var orderBy = $filter('orderBy')
 
-  var container = angular.element(document.getElementById('scroll_results'));
+  var container = angular.element(document.getElementById('scroll_results'))
 
-  var departure_date, return_date;
-  var selected_fares = [];
+  var departure_date, return_date
+  var selected_fares = []
 
-  $scope.origin = '';
-  $scope.destination = '';
+  $scope.origin = ''
+  $scope.destination = ''
 
-  //---
-  //--- load search parameters on form fields
-  //---
+  // ---
+  // --- load search parameters on form fields
+  // ---
 
-  $scope.search = {};
-
+  $scope.search = {}
 
   // - DEPRECATED when multi will be implemented
   $iata.get_object($rp.origin, function(obj) {
@@ -112,28 +115,27 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
       originalObject: obj
     }
 
-    $scope.origin = $scope.search.origin.originalObject.airport.split(",", 1)[0];
-  });
+    $scope.origin = $scope.search.origin.originalObject.airport.split(',', 1)[0]
+  })
 
   $iata.get_object($rp.destination, function(obj) {
     $scope.search.destination = {
       originalObject: obj
     }
 
-    $scope.destination = $scope.search.destination.originalObject.airport.split(",", 1)[0];
-  });
+    $scope.destination = $scope.search.destination.originalObject.airport.split(',', 1)[0]
+  })
 
-
-  var date = $rp.departure.split('-');
+  var date = $rp.departure.split('-')
 
   $scope.dates = {}
 
-  $scope.dates.departure = new Date(date[0], date[1] - 1, date[2]);
+  $scope.dates.departure = new Date(date[0], date[1] - 1, date[2])
 
   if ($rp.return) {
-    var date = $rp.return.split('-');
-    $scope.dates.return = new Date(date[0], date[1] - 1, date[2]);
-    $scope.dates.showReturn = true;
+    var date = $rp.return.split('-')
+    $scope.dates.return = new Date(date[0], date[1] - 1, date[2])
+    $scope.dates.showReturn = true
   }
 
   // - END DEPRECATED
@@ -148,101 +150,95 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   // --- load airports from iata service
 
   $iata.get_airports(function(airports) {
-    $scope.airports = airports;
-  });
+    $scope.airports = airports
+  })
 
   $scope.$watch('currentStretch.schedule.departure.min', function(newVal) {
-    $scope.filter_fares();
-  });
+    $scope.filter_fares()
+  })
 
   $scope.$watch('currentStretch.schedule.departure.max', function(newVal) {
-    $scope.filter_fares();
-  });
+    $scope.filter_fares()
+  })
 
   $scope.$watch('price.range.min', function(newVal) {
-    $scope.filter_fares();
-  });
+    $scope.filter_fares()
+  })
 
   $scope.$watch('price.range.max', function(newVal) {
-    $scope.filter_fares();
-  });
+    $scope.filter_fares()
+  })
 
   $scope.change_flight_option = function(option) {
-
-    flight_option = option;
-    $scope.dates.showReturn = (option == 'roundTrip');
+    flight_option = option
+    $scope.dates.showReturn = (option == 'roundTrip')
 
     $timeout(function() {
-      $scope.$apply();
-    });
+      $scope.$apply()
+    })
   }
 
   function get_airlines(fares, stretch) {
-
     fares.forEach(function(fare) {
-      //search by departure
+      // search by departure
       if (fare.departure && filter(stretch.airlines, { name: fare.departure.airline.name }).length == 0) {
-        stretch.airlines.push({ name: fare.departure.airline.name });
+        stretch.airlines.push({ name: fare.departure.airline.name })
       }
 
-      //search by return
+      // search by return
       else if (fare.return && filter(stretch.airlines, { name: fare.return.airline.name }).length == 0) {
-        stretch.airlines.push({ name: fare.return.airline.name });
+        stretch.airlines.push({ name: fare.return.airline.name })
       }
-    });
+    })
   }
 
   function get_scales(fares, stretch) {
     fares.forEach(function(fare) {
       if (fare.departure && filter(stretch.scales, { value: fare.departure.scales }).length == 0) {
-        stretch.scales.push({ value: fare.departure.scales });
+        stretch.scales.push({ value: fare.departure.scales })
       } else if (fare.return && filter(stretch.scales, { value: fare.return.scales }).length == 0) {
-        stretch.scales.push({ value: fare.return.scales });
+        stretch.scales.push({ value: fare.return.scales })
       }
-    });
+    })
   }
 
   function next() {
-
     $fare.next(function(_fares, page, new_fares) {
-
-      if (!_fares) return;
+      if (!_fares) return
 
       new_fares.forEach(function(fare) {
-
         if (fare.return) {
-          fare.departure = fare.return;
+          fare.departure = fare.return
         }
 
         $iata.get_city(fare.departure.origin, function(city) {
-          fare.origin_city = fare.departure.origin;
-        });
+          fare.origin_city = fare.departure.origin
+        })
 
         $iata.get_city(fare.departure.destination, function(city) {
-          fare.destination_city = fare.departure.destination;
-        });
-      });
+          fare.destination_city = fare.departure.destination
+        })
+      })
 
-      new_fares = orderBy(new_fares, 'price');
+      new_fares = orderBy(new_fares, 'price')
 
-      //clean price range
+      // clean price range
       if ($scope.currentStretch) {
-        $scope.currentStretch.price_range.min = $scope.currentStretch.price_range.max = 0;
+        $scope.currentStretch.price_range.min = $scope.currentStretch.price_range.max = 0
       }
 
       if (page == 0) {
-
-        $scope.stretchs = [];
+        $scope.stretchs = []
 
         for (var i = 0; i < $stretch.getNumber(); i++) {
-          var stretch = {};
+          var stretch = {}
 
-          stretch.fares = filter(new_fares, { round_trip: i });
+          stretch.fares = filter(new_fares, { round_trip: i })
 
           stretch.price_range = {
             min: 0,
             max: 0
-          };
+          }
 
           stretch.schedule = {
             'departure': {
@@ -255,147 +251,139 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
             range: {
               min: 50,
               max: 94000000
-            },
+            }
           }
 
           if (stretch.fares[0].departure) {
-            stretch.departure_date = angular.copy(stretch.fares[0].departure.departure_date);
+            stretch.departure_date = angular.copy(stretch.fares[0].departure.departure_date)
           } else if (stretch.fares[0].return) {
-            stretch.departure_date = angular.copy(stretch.fares[0].return.departure_date);
+            stretch.departure_date = angular.copy(stretch.fares[0].return.departure_date)
           }
 
-          stretch.departure_date.setHours(0);
-          stretch.departure_date.setMinutes(0);
+          stretch.departure_date.setHours(0)
+          stretch.departure_date.setMinutes(0)
 
-          stretch.airlines = [];
-          stretch.scales = [];
+          stretch.airlines = []
+          stretch.scales = []
 
-          get_airlines(stretch.fares, stretch);
-          get_scales(stretch.fares, stretch);
+          get_airlines(stretch.fares, stretch)
+          get_scales(stretch.fares, stretch)
 
-
-          $scope.stretchs.push(stretch);
+          $scope.stretchs.push(stretch)
         }
 
-        $scope.go_to_stretch(0);
+        $scope.go_to_stretch(0)
       } else {
-
         for (var i = 0; i < $scope.stretchs.length; i++) {
-          var stretch = $scope.stretchs[i];
-          var stretch_new_fares = filter(new_fares, { round_trip: i });
+          var stretch = $scope.stretchs[i]
+          var stretch_new_fares = filter(new_fares, { round_trip: i })
 
-          get_airlines(stretch_new_fares, stretch);
-          get_scales(stretch_new_fares, stretch);
+          get_airlines(stretch_new_fares, stretch)
+          get_scales(stretch_new_fares, stretch)
 
-          stretch.fares = stretch.fares.concat(stretch_new_fares);
+          stretch.fares = stretch.fares.concat(stretch_new_fares)
         }
       }
 
-      $scope.filter_fares();
-
-    });
-    console.log("$scope.stretchs")
+      $scope.filter_fares()
+    })
+    console.log('$scope.stretchs')
     console.log($scope.stretchs)
-    localStorage.setItem('myStorage', JSON.stringify($scope.stretchs));
+    localStorage.setItem('myStorage', JSON.stringify($scope.stretchs))
   }
 
   function get_price_ranges(fares) {
+    $scope.currentStretch.prices = []
 
-    $scope.currentStretch.prices = [];
-
-    var delta = Math.round(fares.length / 10) + 1;
+    var delta = Math.round(fares.length / 10) + 1
 
     for (var i = 0; i < fares.length; i += delta) {
-      var same = filter($scope.currentStretch.prices, { price: fares[i].price }).length;
+      var same = filter($scope.currentStretch.prices, { price: fares[i].price }).length
 
       if (same == 0) {
-        $scope.currentStretch.prices.push({ price: fares[i].price });
+        $scope.currentStretch.prices.push({ price: fares[i].price })
       }
     }
-
   }
 
   function airlines_filter(fare) {
-
-    var current = $scope.currentStretch;
+    var current = $scope.currentStretch
 
     return !current.airline || (current.airline.name == fare.departure.airline.name ||
-      (fare.return && current.airline.name == fare.return.airline.name));
+      (fare.return && current.airline.name == fare.return.airline.name))
   }
 
   function scale_filter(fare) {
-
-    var current = $scope.currentStretch;
+    var current = $scope.currentStretch
 
     return !current.scale || (current.scale.value == fare.departure.scales ||
-      (fare.return && current.scale.value == fare.return.scales));
+      (fare.return && current.scale.value == fare.return.scales))
   }
 
   function price_filter(fare) {
-    var current = $scope.currentStretch;
+    var current = $scope.currentStretch
 
-    return fare.price >= current.price.range.min && fare.price <= current.price.range.max;
+    return fare.price >= current.price.range.min && fare.price <= current.price.range.max
   }
 
   function schedule_filter(fare) {
-    var current = $scope.currentStretch;
-    var cont = 0;
+    var current = $scope.currentStretch
+    var cont = 0
     if (fare.departure) {
-      var min_departure = new Date(current.departure_date);
-      var max_departure = new Date(current.departure_date);
+      var min_departure = new Date(current.departure_date)
+      var max_departure = new Date(current.departure_date)
 
-      min_departure.setHours(current.schedule.departure.min);
-      max_departure.setHours(current.schedule.departure.max);
+      min_departure.setHours(current.schedule.departure.min)
+      max_departure.setHours(current.schedule.departure.max)
 
-      return fare.departure.departure_date >= min_departure && fare.departure.departure_date <= max_departure;
+      return fare.departure.departure_date >= min_departure && fare.departure.departure_date <= max_departure
     } else if (fare.return) {
-      var min_return = new Date(current.departure_date);
-      var max_return = new Date(current.departure_date);
+      var min_return = new Date(current.departure_date)
+      var max_return = new Date(current.departure_date)
 
-      min_return.setHours(current.schedule.departure.min);
-      max_return.setHours(current.schedule.departure.max);
+      min_return.setHours(current.schedule.departure.min)
+      max_return.setHours(current.schedule.departure.max)
 
-      return fare.return.departure_date >= min_return && fare.return.departure_date <= max_return;
+      return fare.return.departure_date >= min_return && fare.return.departure_date <= max_return
     }
   }
 
   function drawCalendar(index) {
-    $scope.calendarData.departure = departure_calendar_data($scope.calendar, index);
-    $scope.calendarData.wayBack = return_calendar_data($scope.calendar[$scope.calendarData.depActive].fares);
-    loadCalendar();
+    $scope.calendarData.departure = departure_calendar_data($scope.calendar, index)
+    $scope.calendarData.wayBack = return_calendar_data($scope.calendar[$scope.calendarData.depActive].fares)
+    loadCalendar()
   }
 
   function loadCalendar() {
-    var aux = $scope.calendarData.departure;
-    $scope.calendarData.maxDep = orderBy(aux, 'value').slice(-1)[0].value;
-    var aux2 = $scope.calendarData.wayBack;
-    $scope.calendarData.maxRet = orderBy(aux2, 'value').slice(-1)[0].value;
+    var aux = $scope.calendarData.departure
+    $scope.calendarData.maxDep = orderBy(aux, 'value').slice(-1)[0].value
+    var aux2 = $scope.calendarData.wayBack
+    $scope.calendarData.maxRet = orderBy(aux2, 'value').slice(-1)[0].value
   }
 
   $scope.months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
   $scope.days = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa']
 
   function departure_calendar_data(solutions, index) {
-
     dateFilter = function(fare) {
-      return fare.departure_date.getDate() == $scope.active_bar_date.getDate();
+      return fare.departure_date.getDate() == $scope.active_bar_date.getDate()
     }
 
     result = []
     for (i in solutions) {
       option = {}
-      solutions[i].departure_date = new Date(solutions[i].departure_date);
-      option['month'] = $scope.months[solutions[i].departure_date.getMonth()];
-      option['day'] = solutions[i].departure_date.getDate();
-      option['weekday'] = $scope.days[solutions[i].departure_date.getDay()];
-      option['value'] = orderBy(solutions[i].fares, 'amount')[0].amount;
-      option['price'] = (option['value'] * 1000).toString();
-      result.push(option);
+      solutions[i].departure_date = new Date(solutions[i].departure_date)
+      option['month'] = $scope.months[solutions[i].departure_date.getMonth()]
+      option['day'] = solutions[i].departure_date.getDate()
+      option['weekday'] = $scope.days[solutions[i].departure_date.getDay()]
+      option['value'] = orderBy(solutions[i].fares, 'amount')[0].amount
+      option['price'] = (option['value'] * 1000).toString()
+      result.push(option)
     }
     if (!index && index != 0) {
-      $scope.active_bar_date = new Date($rp.departure + 'T12:00:00');
+      $scope.active_bar_date = new Date($rp.departure + 'T12:00:00')
     }
-    $scope.calendarData.depActive = $scope.calendar.indexOf(filter($scope.calendar, dateFilter)[0]);
+    $scope.calendarData.depActive = $scope.calendar.indexOf(filter($scope.calendar, dateFilter)[0])
     return result
   }
 
@@ -403,171 +391,161 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
     result = []
     for (i in solutions) {
       option = {}
-      solutions[i].departure_date = new Date(solutions[i].departure_date);
-      solutions[i].return_date = new Date(solutions[i].return_date);
-      option['month'] = $scope.months[solutions[i].return_date.getMonth()];
-      option['day'] = solutions[i].return_date.getDate();
-      option['weekday'] = $scope.days[solutions[i].return_date.getDay()];
-      option['value'] = solutions[i].amount;
-      option['price'] = (option['value'] * 1000).toString();
-      result.push(option);
+      solutions[i].departure_date = new Date(solutions[i].departure_date)
+      solutions[i].return_date = new Date(solutions[i].return_date)
+      option['month'] = $scope.months[solutions[i].return_date.getMonth()]
+      option['day'] = solutions[i].return_date.getDate()
+      option['weekday'] = $scope.days[solutions[i].return_date.getDay()]
+      option['value'] = solutions[i].amount
+      option['price'] = (option['value'] * 1000).toString()
+      result.push(option)
     }
-    $scope.calendarData.backActive = result.indexOf(orderBy(result, 'value')[0]);
+    $scope.calendarData.backActive = result.indexOf(orderBy(result, 'value')[0])
     return result
   }
 
   function check_date_diference(departure) {
-    today = new Date();
-    dep = new Date(departure);
-    milliseconds = 0;
-    daysDiff = Math.ceil(Math.abs(dep.getTime() - today.getTime()) / (1000 * 3600 * 24));
+    today = new Date()
+    dep = new Date(departure)
+    milliseconds = 0
+    daysDiff = Math.ceil(Math.abs(dep.getTime() - today.getTime()) / (1000 * 3600 * 24))
     if (daysDiff >= 15) {
-      milliseconds = 15 * 24 * 60 * 60 * 1000;
+      milliseconds = 15 * 24 * 60 * 60 * 1000
     } else {
-      milliseconds = (daysDiff - 1) * 24 * 60 * 60 * 1000;
+      milliseconds = (daysDiff - 1) * 24 * 60 * 60 * 1000
     }
-    time = dep.getTime();
-    dep.setTime(time - milliseconds);
+    time = dep.getTime()
+    dep.setTime(time - milliseconds)
     return dep
   }
 
   $scope.barClicked = function(index, option) {
     if (index != -1) {
-      $scope.active_bar_date = $scope.calendar[index].departure_date;
-      current_date_departure = $scope.calendar[index].departure_date.toISOString().substring(0, 10);
+      $scope.active_bar_date = $scope.calendar[index].departure_date
+      current_date_departure = $scope.calendar[index].departure_date.toISOString().substring(0, 10)
     } else {
       if (option == 1) {
         $scope.active_bar_date = $scope.calendar.slice(-1)[0].departure_date
-        current_date_departure = $scope.calendar.slice(-1)[0].departure_date.toISOString().substring(0, 10);
+        current_date_departure = $scope.calendar.slice(-1)[0].departure_date.toISOString().substring(0, 10)
       } else {
-        $scope.active_bar_date = check_date_diference($scope.calendar[0].departure_date);
-        current_date_departure = new Date($scope.active_bar_date).toISOString().substring(0, 10);
+        $scope.active_bar_date = check_date_diference($scope.calendar[0].departure_date)
+        current_date_departure = new Date($scope.active_bar_date).toISOString().substring(0, 10)
       }
     }
-    get_calendar(index, current_date_departure);
+    get_calendar(index, current_date_departure)
   }
 
   $scope.barReturnClicked = function(index) {
-    $scope.calendarData.backActive = index;
+    $scope.calendarData.backActive = index
   }
 
   $scope.changeSearch = function() {
-    current_departure = $scope.calendar[$scope.calendarData.depActive].departure_date.toISOString().substring(0, 10);
-    current_return = $scope.calendar[$scope.calendarData.depActive].fares[$scope.calendarData.backActive].return_date.toISOString().substring(0, 10);
+    current_departure = $scope.calendar[$scope.calendarData.depActive].departure_date.toISOString().substring(0, 10)
+    current_return = $scope.calendar[$scope.calendarData.depActive].fares[$scope.calendarData.backActive].return_date.toISOString().substring(0, 10)
     $location.path('/volaires/results/' + $rp.origin + '-' + $rp.destination + '/' +
-      current_departure + '/' + current_return + '/adults-' + $rp.adults + '/children-' + $rp.children + '/seat-babies-' + $rp.babies1 + '/babies-' + $rp.babies2 + '/');
+      current_departure + '/' + current_return + '/adults-' + $rp.adults + '/children-' + $rp.children + '/seat-babies-' + $rp.babies1 + '/babies-' + $rp.babies2 + '/')
   }
 
   $scope.filter_fares = function() {
+    var current = $scope.currentStretch
 
-    var current = $scope.currentStretch;
+    if (!current || !current.fares) return
 
-    if (!current || !current.fares) return;
+    current.visibleFares = filter(current.fares, airlines_filter)
 
-    current.visibleFares = filter(current.fares, airlines_filter);
+    current.visibleFares = filter(current.visibleFares, scale_filter)
+    current.visibleFares = filter(current.visibleFares, schedule_filter)
+    current.visibleFares = filter(current.visibleFares, price_filter)
 
-    current.visibleFares = filter(current.visibleFares, scale_filter);
-    current.visibleFares = filter(current.visibleFares, schedule_filter);
-    current.visibleFares = filter(current.visibleFares, price_filter);
-
-    get_price_ranges(current.visibleFares);
-
+    get_price_ranges(current.visibleFares)
   }
 
   $scope.set_min_price = function(item) {
-    var current = $scope.currentStretch;
+    var current = $scope.currentStretch
 
-    current.price_range.min = item.price;
+    current.price_range.min = item.price
 
-    var index = current.prices.indexOf(item);
+    var index = current.prices.indexOf(item)
 
     if (index == current.prices.length - 1) {
-      current.price_range.max = Number.POSITIVE_INFINITY;
+      current.price_range.max = Number.POSITIVE_INFINITY
     } else {
-      current.price_range.max = current.prices[index + 1].price;
+      current.price_range.max = current.prices[index + 1].price
     }
   }
 
   $scope.get_price_ref = function(item) {
-
-    var element_index = 0;
-    var current = $scope.currentStretch;
+    var element_index = 0
+    var current = $scope.currentStretch
 
     for (var index in $scope.fares) {
       if (current.fares[index].price >= item.price) {
-        element_index = index;
-        break;
+        element_index = index
+        break
       }
     }
 
-    return 'fare-' + element_index;
+    return 'fare-' + element_index
   }
 
   $scope.get_fares_by_price = function(index) {
-
-    var begin = $scope.currentStretch.prices[index];
-    var filter;
-    var current = $scope.currentStretch;
+    var begin = $scope.currentStretch.prices[index]
+    var filter
+    var current = $scope.currentStretch
 
     if (current.prices.length > index + 1) {
-
-      var end = current.prices[index + 1];
+      var end = current.prices[index + 1]
 
       filter = function(fare) {
-        return fare.price >= begin.price && fare.price < end.price;
+        return fare.price >= begin.price && fare.price < end.price
       }
     } else {
       filter = function(fare) {
-        return fare.price >= begin.price;
+        return fare.price >= begin.price
       }
     }
 
-    return current.visibleFares.filter(filter);
+    return current.visibleFares.filter(filter)
   }
 
   $scope.update = function($event, isEnd) {
-
-    if (!isEnd) return;
+    if (!isEnd) return
 
     if ($event.target.scrollTop + $event.target.clientHeight >= $event.target.scrollHeight * 0.9) {
-      next();
+      next()
     }
   }
 
   $scope.in_price_range = function(fare) {
-    return fare.price >= $scope.currentStretch.price_range.min && fare.price < $scope.currentStretch.price_range.max;
+    return fare.price >= $scope.currentStretch.price_range.min && fare.price < $scope.currentStretch.price_range.max
   }
 
   $scope.process_selection = function(fare) {
+    var index = $scope.stretchs.indexOf($scope.currentStretch)
 
-    var index = $scope.stretchs.indexOf($scope.currentStretch);
-
-    selected_fares.push(fare);
+    selected_fares.push(fare)
 
     if (index == $scope.stretchs.length - 1) {
-      $scope.open(null, selected_fares);
+      $scope.open(null, selected_fares)
     } else {
-      $scope.go_to_stretch($scope.currentStretchIndex + 1);
-      $scope.filter_fares();
-
+      $scope.go_to_stretch($scope.currentStretchIndex + 1)
+      $scope.filter_fares()
     }
   }
 
   $scope.go_to_stretch = function(index) {
-    $scope.currentStretch = $scope.stretchs[index];
-    $scope.currentStretchIndex = index;
+    $scope.currentStretch = $scope.stretchs[index]
+    $scope.currentStretchIndex = index
 
     if (index == 0) {
       for (var i = selected_fares.length + 1; i >= 0; i--) {
-        selected_fares.splice(selected_fares.length - 1, i);
-      };
-    };
-
+        selected_fares.splice(selected_fares.length - 1, i)
+      }
+    }
   }
 
   // open modal details
   $scope.open = function(size, fares) {
-
     var modalInstance = $modal.open({
       location: '/volaires/results/details',
       templateUrl: '/angular/details.html',
@@ -575,57 +553,54 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
       size: size,
       resolve: {
         fares: function() {
-          return fares;
+          return fares
         }
       }
-    });
+    })
 
     modalInstance.result.then(function() {
-        selected_fares.splice(selected_fares.length - 1, 1);
+        selected_fares.splice(selected_fares.length - 1, 1)
       },
       function() {
-
-        selected_fares.splice(selected_fares.length - 1, 1);
+        selected_fares.splice(selected_fares.length - 1, 1)
       })
   }
 
   $bars.get_fares(function(fares_bars) {
-    $scope.fares_bars = fares_bars;
-  });
+    $scope.fares_bars = fares_bars
+  })
+}])
 
-}]);
-
-volaires.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', '$location', '$http', 'iata', 'fares', 'fare', 'facebookService', 'socialAPI', function($scope, $modalInstance, $location, $http, iata, fares, $fare, facebookService, socialAPI) {
-
-  $scope.fares = [];
-  $scope.total_price = 0;
+clienteAPP.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', '$location', '$http', 'iata', 'fares', 'fare', 'facebookService', 'socialAPI', function($scope, $modalInstance, $location, $http, iata, fares, $fare, facebookService, socialAPI) {
+  $scope.fares = []
+  $scope.total_price = 0
 
   fares.forEach(function(fare) {
     $fare.details(fare.key, function(err, data) {
-      $scope.fares.push(data);
-      $scope.total_price += parseFloat(data.details.amount);
+      $scope.fares.push(data)
+      $scope.total_price += parseFloat(data.details.amount)
     })
-  });
+  })
 
   $scope.ok = function() {
-    $modalInstance.close();
-  };
+    $modalInstance.close()
+  }
 
   $scope.purchase = function(key) {
-    $fare.setFaresforPurchase($scope.fares);
-    $location.path('/volaires/compra/');
-    $modalInstance.close();
+    $fare.setFaresforPurchase($scope.fares)
+    $location.path('/volaires/compra/')
+    $modalInstance.close()
   }
 
   $scope.sharePlanOnFacebook = function() {
-    var message = 'Viaje ida y vuelta ' + $scope.fares[0].details.trips[0].segments[0].origin.name + '-' + $scope.fares[0].details.trips[0].segments[0].destination.name + ' por tan solo $' + $scope.total_price + ' COP';
-    var originCity = $scope.fares[0].origin_city;
-    var destinationCity = $scope.fares[0].destination_city;
-    var adultsNumber = $scope.fares[0].passengers.adults;
-    var childrenNumber = $scope.fares[0].passengers.child;
-    var departureDate = new Date($scope.fares[0].details.trips[0].segments[0].departure_date);
-    var returnDate = new Date($scope.fares[1].details.trips[0].segments[0].departure_date);
-    var link = 'http://volaires.com/volaires/results/' + originCity + '-' + destinationCity + '/' + departureDate.toISOString().substring(0, 10) + '/' + returnDate.toISOString().substring(0, 10) + '/adults-' + adultsNumber + '/children-' + childrenNumber + '/seat-babies-0/babies-0/';
+    var message = 'Viaje ida y vuelta ' + $scope.fares[0].details.trips[0].segments[0].origin.name + '-' + $scope.fares[0].details.trips[0].segments[0].destination.name + ' por tan solo $' + $scope.total_price + ' COP'
+    var originCity = $scope.fares[0].origin_city
+    var destinationCity = $scope.fares[0].destination_city
+    var adultsNumber = $scope.fares[0].passengers.adults
+    var childrenNumber = $scope.fares[0].passengers.child
+    var departureDate = new Date($scope.fares[0].details.trips[0].segments[0].departure_date)
+    var returnDate = new Date($scope.fares[1].details.trips[0].segments[0].departure_date)
+    var link = 'http://volaires.com/volaires/results/' + originCity + '-' + destinationCity + '/' + departureDate.toISOString().substring(0, 10) + '/' + returnDate.toISOString().substring(0, 10) + '/adults-' + adultsNumber + '/children-' + childrenNumber + '/seat-babies-0/babies-0/'
 
     var data = {
       message: message,
@@ -639,15 +614,14 @@ volaires.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', '$location
     }
 
     socialAPI.publishFlightFB(data).then(function(data) {
-      //@TODO: show to the user the modal with success message
-    });
+      // @TODO: show to the user the modal with success message
+    })
   }
+}])
 
-}]);
-
-volaires.filter('startFrom', function() {
+clienteAPP.filter('startFrom', function() {
   return function(input, start) {
-    start = +start;
-    return input.slice(start);
+    start = +start
+    return input.slice(start)
   }
-});
+})
