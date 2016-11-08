@@ -1,0 +1,57 @@
+<div ng-init="childrenInfo[$index].type='CHD'" class="container-passenger">
+  <div class="row" id="traveler">
+    <div class="col-xs-12 col-sm-6">
+      <label>Nombre/s</label>
+      <input ng-model="childrenInfo[$index].firstName" type="text" id="passanger_name" class="form-control" ng-pattern="validation.text" required>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <label>Apellidos/s</label>
+      <input ng-model="childrenInfo[$index].lastName" type="text" id="passanger_last_name" class="form-control" ng-pattern="validation.text" required>
+    </div>
+  </div>
+  <div class="row row-padding">
+    <div class="col-xs-12 col-sm-6">
+      <label>C&eacute;dula/ID</label>
+      <input ng-model="childrenInfo[$index].id" type="text" id="passanger_id" class="form-control" ng-pattern="validation.text" required>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <label>Género</label>
+      <select class="form-control" ng-model="childrenInfo[$index].gender" required id="passanger_gender" class="form-control">
+				<option disabled value="" selected>Género</option>
+				<option value="M">Masculino</option>
+				<option value="F">Femenino</option>
+      </select>
+    </div>
+  </div>
+  <div class="row row-padding">
+    <div class="col-xs-12 col-sm-6" id="passanger_birth">
+      <div class="dob-container">
+        <div class="col-xs-12">
+          <label for="passenger_birth">Fecha de Nacimiento</label>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <select ng-model="childrenInfo[$index].yearBirth" class="form-control" required>
+            <option disabled value="" selected>Año</option>
+            <option ng-repeat="year in range(11)">[[currentYear - year - 2]]</option>
+          </select>
+        </div>
+        <div class="col-xs-12 col-sm-4" ng-init="dayIndex=$index">
+          <select ng-model="childrenInfo[$index].monthBirth" class="form-control" required>
+            <option disabled value="" selected>Mes</option>
+            <option ng-repeat="month in pickMonth(dayIndex,1,12,2)">[[month]]</option>
+          </select>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <select ng-model="childrenInfo[$index].dayBirth" class="form-control" required>
+            <option disabled value="" selected>Dia</option>
+            <option ng-repeat="day in restrictDays(dayIndex,1,12,2)">[[day]]</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6" ng-show="isAnInternationalFlight" ng-if="isAnInternationalFlight">
+      <label>Pasaporte</label>
+      <input ng-model="childrenInfo[$index].passport" type="text" id="passanger_passport" class="form-control" ng-pattern="validation.text" required>
+    </div>
+  </div>
+</div>

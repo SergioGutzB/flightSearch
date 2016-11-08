@@ -1,0 +1,146 @@
+{
+    "Category": {
+        "M": "Mini",
+        "N": "Mini Elite",
+        "E": "Economico",
+        "H": "Economico Elite",
+        "C": "Compacto",
+        "D": "Compacto Elite",
+        "I": "Intermedio",
+        "J": "Intermedio Elite",
+        "S": "Estandar",
+        "R": "Estandar Elite",
+        "F": "Fullsize",
+        "G": "Fullsize Elite",
+        "P": "Premium",
+        "U": "Premium Elite",
+        "L": "Lujo",
+        "W": "Lujo Elite",
+        "O": "Monovolumen",
+        "X": "Especial"
+    },
+    "Type": {
+        "B": "2-3 Puertas",
+        "C": "2/4 Puertas",
+        "D": "4-5 Puertas",
+        "W": "Wagon/Estate",
+        "V": "Monovolumen",
+        "L": "Limosina",
+        "S": "Deportivo",
+        "T": "Convertible",
+        "F": "4x4",
+        "J": "4x4 Abierto",
+        "X": "Especial",
+        "P": "Pickup con cabina media regular",
+        "Q": "Pickup con medida mas grande",
+        "Z": "Oferta Especial",
+        "E": "Coupe",
+        "M": "Monoespacio",
+        "R": "Vehichulo de recreacion",
+        "H": "Motorhome",
+        "Y": "Vehichulo de dos ruedas",
+        "N": "Roadster",
+        "G": "Crossover",
+        "K": "Vehiculo Comercial"
+    },
+    "Transmission_Drive": {
+        "M": {
+            "transmission": "Manual",
+            "drive": "Sin especificar"
+        },
+        "N": {
+            "transmission": "Manual",
+            "drive": "Traccion delantera"
+        },
+        "C": {
+            "transmission": "Manual",
+            "drive": "Traccion 4 ruedas"
+        },
+        "A": {
+            "transmission": "Automatica",
+            "drive": "Sin especificar"
+        },
+        "B": {
+            "transmission": "Automatica",
+            "drive": "Traccion 4 ruedas"
+        },
+        "D": {
+            "transmission": "Automatica",
+            "drive": "Traccion delantera"
+        }
+    },
+    "Fuel_Air": {
+        "R": {
+            "fuel": "Sin especificar",
+            "air": "Si"
+        },
+        "N": {
+            "fuel": "Sin especificar",
+            "air": "No"
+        },
+        "D": {
+            "fuel": "Diesel",
+            "air": "Si"
+        },
+        "Q": {
+            "fuel": "Diesel",
+            "air": "No"
+        },
+        "H": {
+            "fuel": "Vehichulo hibrido",
+            "air": "Si"
+        },
+        "I": {
+            "fuel": "Vehichulo hibrido",
+            "air": "No"
+        },
+        "E": {
+            "fuel": "Electrico",
+            "air": "Si"
+        },
+        "C": {
+            "fuel": "Electrico",
+            "air": "No"
+        },
+        "L": {
+            "fuel": "Gas Licuado Petroleo",
+            "air": "Si"
+        },
+        "S": {
+            "fuel": "Gas Licuado Petroleo",
+            "air": "No"
+        },
+        "A": {
+            "fuel": "Hidrogeno",
+            "air": "Si"
+        },
+        "B": {
+            "fuel": "Hidrogeno",
+            "air": "No"
+        },
+        "M": {
+            "fuel": "Multicombustible",
+            "air": "Si"
+        },
+        "F": {
+            "fuel": "Multicombustible",
+            "air": "No"
+        },
+        "V": {
+            "fuel": "Gasolina",
+            "air": "Si"
+        },
+        "Z": {
+            "fuel": "Gasolina",
+            "air": "No"
+        },
+        "U": {
+            "fuel": "Etanol",
+            "air": "Si"
+        },
+        "X": {
+            "fuel": "Etanol",
+            "air": "No"
+        }
+    }
+}

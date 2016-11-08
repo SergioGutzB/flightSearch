@@ -1,0 +1,196 @@
+@import "variables.less";
+@import "mixings.less";
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 1px) {
+
+  .comparative-bars {
+    margin-bottom: 20px;
+    .chart,
+    .chart-months {
+      margin-bottom: 20px;
+      position:relative;
+      list-style:none;
+      padding:0;
+
+      .bar  {
+        background: #469196;
+        position:absolute;
+        bottom:0;
+        border-radius: 25px;
+        &:hover,
+        &.current-date {
+          background: #FDC400;
+          span {
+            opacity:1;
+          }
+        }
+
+        .info-bar {
+          position: absolute;
+          bottom: -50px;
+          text-alin: center;
+        }
+      }
+      .col-xs-1 {
+        padding: 0px;
+      }
+    }
+
+    .chart-months {
+      border-bottom: 2px solid #469196 !important;
+      margin-bottom: 15px !important;
+      height: 30px;
+      .row-month {
+        position:absolute;
+        width:100%;
+        top: 0px;
+      }
+    }
+
+    h4,h5,h6 {
+      font-family: Larsseit-Med !important;
+      font-weight: 400;
+      font-size: 15px;
+      color: #469196;
+    }
+
+    h5 {
+      text-transform: uppercase;
+      font-size: 11px;
+      &.active {
+        color: #FDC400;
+      }
+    }
+    h6 {
+      font-family: Larsseit-Light !important;
+      font-size: 12px;
+      color: #053C58;
+    }
+
+    .btns {
+      .next,
+      .previous {
+        border: 0px !important;
+        position: absolute;
+        background: #fff;
+        bottom: -22px;
+        padding: 0px;
+        margin: 0px;
+        i {
+          color: #1A5181;
+          font-size: 23px;
+        }
+      }
+      .previous {
+        position: absolute;
+        float: left;
+        left: 0px;
+      }
+      .next {
+        position: absolute;
+        float: right;
+        right: 0px;
+      }
+    }
+
+    .bar-right {
+      padding-top: 35px;
+    }
+
+    .info-bars {
+      background: #C7DEF3;
+      border-radius: 10px;
+      margin-top: 40px;
+      .calendar-btn {
+        background: @volaires-red-second;
+        font-family: Larsseit-Light;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        padding: 6px 19px;
+        margin-top: 15px;
+        font-weight: 700;
+        font-size: 14px;
+        border: 0px;
+        color: #fff;
+        &:hover {
+          background: @volaires-red;
+        }
+      }
+      h6 {
+        font-size: 14px;
+        &.per-adult {
+          color: #F00;
+        }
+      }
+      .description,
+      .box-btn-change-search{
+        text-align: center;
+      }
+    }
+
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  .comparative-bars {
+    .bar-right {
+      padding-top: 0px;
+    }
+    .info-bars {
+      .calendar-btn {
+
+      }
+      .box-btn-change-search{
+        text-align: right;
+      }
+      .description {
+        text-align: left;
+      }
+    }
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+  .comparative-bars {
+    .bar-left {
+      padding: 0px 40px;
+      .btns {
+        .next {
+          right: 5px;
+        }
+      }
+    }
+    .bar-right {
+      padding:0px 40px;
+      .btns {
+        .previous {
+          left: 5px;
+        }
+      }
+    }
+  }
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+@media (max-width: 400px) {
+    .comparative-bars {
+      .chart-months {
+        li {
+          padding: 0px;
+          h5 {
+            font-size: 9px;
+          }
+        }
+      }
+    }
+}
