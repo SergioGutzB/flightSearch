@@ -37,10 +37,16 @@ angular
       })
     }
 
-    function next(callback) {
+    function next(result, callback) {
       if (!more) callback(null)
-
-      $http.get('/results/page/' + page + '/')
+      $http({
+          url: 'http://127.0.0.1:3000/result/pages/',
+          method: 'POST',
+          data: {
+            page: page,
+            result: result
+          }
+        })
         .success(function(data) {
           parse_prices(data.fares)
           parse_dates(data.fares)
@@ -79,14 +85,21 @@ angular
       })
     }
 
-    function getDetails(key, callback) {
+    function getDetails(results, key, callback) {
       var fares = filter(all_fares, { key: key })
       if (fares.length > 0) {
         var fare = fares[0]
         if (fare.details) {
           callback(null, fare)
         } else {
-          $http.get('/results/details/' + key)
+          $http({
+              url: 'http://127.0.0.1:3000/results/details/',
+              method: 'POST',
+              data: {
+                key: key,
+                result: results
+              }
+            })
             .success(function(data) {
               fare.details = data
               fare.details.trips.forEach(function(trip) {
@@ -103,10 +116,9 @@ angular
                   })
                 })
               })
-
               callback(null, fare)
             })
-            .error(function() {
+            .error(function(error) {
               callback(error)
             })
         }
@@ -131,20 +143,12 @@ angular
       getFaresforPurchase: getFaresforPurchase,
       searchFare: function(origin, destination, departure_date, return_date, passengers) {
         global = $http({
-          method: 'POST',
-          url: '/search/',
-          data: {
-            args: {
-              origin_city: origin,
-              destination_city: destination,
-              departure_date: departure_date,
-              return_date: return_date,
-              adults: passengers.adults,
-              children: passengers.children,
-              babies1: passengers.babies1
-            }
-          }
+          method: 'GET',
+          url: 'http://127.0.0.1:3000/search/?origin=' + origin + '&destination=' + destination + '&departure_date=' + departure_date + '&return_date=' + return_date + '&adults=' + passengers.adults + '&children=' + passengers.children + '&babies1=' + passengers.babies1
         })
+        all_fares = []
+        more = true
+        page = 0
         return global
       },
       getTime: function(destination, departure_date) {
@@ -156,6 +160,7 @@ angular
             fecha: departure_date,
           }
         })
+
         return global
       }
     }

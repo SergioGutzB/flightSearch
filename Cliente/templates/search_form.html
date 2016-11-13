@@ -5,13 +5,13 @@
         <div class="col-xs-12 col-sm-6 col-md-2 input-origin">
           <img src="/images/airplane_origin.png" alt="origin">
           <label>ORIGEN</label>
-          <angucomplete-alt id="origin" selected-object="select_origin" local-data="airports" title-field="airport" search-fields="airport, code" initial-value="{{search.origin.originalObject.airport}}" minlength="1" />
+          <angucomplete-alt id="origin" selected-object="select_origin" local-data="airports" title-field="airport" search-fields="airport, code" initial-value="[[search.origin.originalObject.airport]]" minlength="1" />
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-2 input-destination">
           <img src="/images/airplane_des.png" alt="destination">
           <label>DESTINO</label>
-          <angucomplete-alt id="destination" selected-object="select_destination" local-data="airports" title-field="airport" search-fields="airport, code" initial-value="{{search.destination.originalObject.airport}}" minlength="1" />
+          <angucomplete-alt id="destination" selected-object="select_destination" local-data="airports" title-field="airport" search-fields="airport, code" initial-value="[[search.destination.originalObject.airport]]" minlength="1" />
         </div>
 
         <date-picker departure="dates.departure" return="dates.return" show-return="dates.showReturn" ng-init="dates.showReturn = true"></date-picker>

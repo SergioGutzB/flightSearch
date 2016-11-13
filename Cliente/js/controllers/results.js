@@ -1,5 +1,10 @@
 var clienteAPP = angular.module('clienteAPP')
 
+clienteAPP.config(function($interpolateProvider) {
+  $interpolateProvider.startSymbol('[[');
+  $interpolateProvider.endSymbol(']]');
+});
+
 clienteAPP.run(function($rootScope, $location) {
   $rootScope.$on('duScrollspy:becameActive', function($event, $element) {
     var id = $element[0].href.split('#')[1]
@@ -15,6 +20,8 @@ clienteAPP.run(function($rootScope, $location) {
   })
 })
 
+var result_sol = {};
+
 clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routeParams', '$scope', '$modal', '$timeout', 'stretch', 'bars', '$location', '$window', function($http, $filter, $fare, $iata, $rp, $scope, $modal, $timeout, $stretch, $bars, $location, $window) {
   $scope.flight_option = $rp.return ? 'roundTrip' : 'oneWay'
 
@@ -28,11 +35,6 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
     maxDep: 0,
     maxRet: 0
   }
-  $scope.currentStretch = {
-    prices: [],
-    visibleFares: -1
-  }
-  $scope.fares_by_price = []
 
   $scope.currentPageD, $scope.currentPageR = 0
   $scope.pageSize = 20
@@ -42,58 +44,32 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   $scope.width = (w.width() - (w.width() * 30 / 100)) / 2
   $scope.height = 100
 
-  if ($rp.departure) {
-    var departure_date = $filter('date')($rp.departure, 'yyyy-MM-dd')
-    departure_date = departure_date.split('-')
-    departure_date = new Date(departure_date[0], departure_date[1] - 1, departure_date[2])
-  }
+  var solution = {};
+  var solution_return = {};
 
-  if ($rp.return) {
-    var return_date = $filter('date')($rp.return, 'yyyy-MM-dd')
-    return_date = return_date.split('-')
-    return_date = new Date(return_date[0], return_date[1] - 1, return_date[2])
-  }
 
-  $fare.searchFare($rp.origin, $rp.destination, departure_date, return_date, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 })
+  $fare.searchFare($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 })
     .then(function(res) {
-
-      $scope.fares = res.data.result
-      console.log($scope.fares)
-      $scope.stretchs = 1
-      for (index in $scope.fares) {
-        $scope.currentStretch.prices.push($scope.fares[index].price)
-      }
-
-      if ($scope.fares == null) {
-        $scope.currentStretch.visibleFares = []
-        console.log($scope.currentStretch.visibleFares.lenght)
-      } else {
-        for (index in $scope.fares) {
-          $scope.fares_by_price.push($scope.fares[index])
-        }
-        console.log($scope.fares_by_price, $scope.fares_by_price.lenght)
-        $scope.fares_by_price.forEach(function(fare) {
-          if (fare.departure) {
-            fare.departure.departure_date = new Date(fare.departure.departure_date)
-            fare.departure.arrival_date = new Date(fare.departure.arrival_date)
-          } else if (fare.return) {
-            fare.return.departure_date = new Date(fare.return.departure_date)
-            fare.return.arrival_date = new Date(fare.return.arrival_date)
-          }
-        })
-      }
-      $scope.loading = false
-      console.log($scope.fares_by_price, $scope.fares_by_price.lenght)
-
-
-
+      // console.log(res.data.result);
+      result_sol = res.data.result;
+      solution = res.data.result.solution;
+      solution_return = res.data.result.solution_return;
+      $scope.loading = false;
+      next();
+    }, function(err) {
+      $scope.alerts = [
+        { type: 'info', msg: 'Lo sentimos! en este momento no existen vuelos disponibles, por favor intenta en unos minutos.' }
+      ];
+      $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+      };
     });
 
-  $fare.getTime($rp.destination, $filter('date')($rp.departure, 'yyyy-MM-dd'))
-    .then(function (res) {
-      $scope.temperatura = res.data.temperatura;
-      $scope.humedad = res.data.humedad;
-    });
+  // $fare.getTime($rp.destination, $filter('date')($rp.departure, 'yyyy-MM-dd'))
+  //   .then(function(res) {
+  //     $scope.temperatura = res.data.temperatura;
+  //     $scope.humedad = res.data.humedad;
+  //   });
 
 
   var filter = $filter('filter')
@@ -207,7 +183,7 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   }
 
   function next() {
-    $fare.next(function(_fares, page, new_fares) {
+    $fare.next(result_sol, function(_fares, page, new_fares) {
       if (!_fares) return
 
       new_fares.forEach(function(fare) {
@@ -291,9 +267,6 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
 
       $scope.filter_fares()
     })
-    console.log('$scope.stretchs')
-    console.log($scope.stretchs)
-    localStorage.setItem('myStorage', JSON.stringify($scope.stretchs))
   }
 
   function get_price_ranges(fares) {
@@ -446,7 +419,7 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   $scope.changeSearch = function() {
     current_departure = $scope.calendar[$scope.calendarData.depActive].departure_date.toISOString().substring(0, 10)
     current_return = $scope.calendar[$scope.calendarData.depActive].fares[$scope.calendarData.backActive].return_date.toISOString().substring(0, 10)
-    $location.path('/volaires/results/' + $rp.origin + '-' + $rp.destination + '/' +
+    $location.path('/results/' + $rp.origin + '-' + $rp.destination + '/' +
       current_departure + '/' + current_return + '/adults-' + $rp.adults + '/children-' + $rp.children + '/seat-babies-' + $rp.babies1 + '/babies-' + $rp.babies2 + '/')
   }
 
@@ -551,8 +524,8 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   // open modal details
   $scope.open = function(size, fares) {
     var modalInstance = $modal.open({
-      location: '/volaires/results/details',
-      templateUrl: '/angular/details.html',
+      location: '/results/details',
+      templateUrl: '/templates/details.html',
       controller: 'ModalInstanceCtrl',
       size: size,
       resolve: {
@@ -575,12 +548,12 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   })
 }])
 
-clienteAPP.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', '$location', '$http', 'iata', 'fares', 'fare', 'facebookService', 'socialAPI', function($scope, $modalInstance, $location, $http, iata, fares, $fare, facebookService, socialAPI) {
+clienteAPP.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', '$location', '$http', 'iata', 'fares', 'fare', function($scope, $modalInstance, $location, $http, iata, fares, $fare) {
   $scope.fares = []
   $scope.total_price = 0
 
   fares.forEach(function(fare) {
-    $fare.details(fare.key, function(err, data) {
+    $fare.details(result_sol, fare.key, function(err, data) {
       $scope.fares.push(data)
       $scope.total_price += parseFloat(data.details.amount)
     })
@@ -592,35 +565,10 @@ clienteAPP.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', '$locati
 
   $scope.purchase = function(key) {
     $fare.setFaresforPurchase($scope.fares)
-    $location.path('/volaires/compra/')
+    $location.path('/compra/')
     $modalInstance.close()
   }
 
-  $scope.sharePlanOnFacebook = function() {
-    var message = 'Viaje ida y vuelta ' + $scope.fares[0].details.trips[0].segments[0].origin.name + '-' + $scope.fares[0].details.trips[0].segments[0].destination.name + ' por tan solo $' + $scope.total_price + ' COP'
-    var originCity = $scope.fares[0].origin_city
-    var destinationCity = $scope.fares[0].destination_city
-    var adultsNumber = $scope.fares[0].passengers.adults
-    var childrenNumber = $scope.fares[0].passengers.child
-    var departureDate = new Date($scope.fares[0].details.trips[0].segments[0].departure_date)
-    var returnDate = new Date($scope.fares[1].details.trips[0].segments[0].departure_date)
-    var link = 'http://volaires.com/volaires/results/' + originCity + '-' + destinationCity + '/' + departureDate.toISOString().substring(0, 10) + '/' + returnDate.toISOString().substring(0, 10) + '/adults-' + adultsNumber + '/children-' + childrenNumber + '/seat-babies-0/babies-0/'
-
-    var data = {
-      message: message,
-      originCity: originCity,
-      destinationCity: destinationCity,
-      adultsNumber: adultsNumber,
-      childrenNumber: childrenNumber,
-      departureDate: departureDate,
-      returnDate: returnDate,
-      link: link
-    }
-
-    socialAPI.publishFlightFB(data).then(function(data) {
-      // @TODO: show to the user the modal with success message
-    })
-  }
 }])
 
 clienteAPP.filter('startFrom', function() {

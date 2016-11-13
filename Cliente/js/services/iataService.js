@@ -52,11 +52,30 @@ angular
         });
     }
 
+    function get_airports_all(callback) {
+
+      if (airports_all) {
+        return callback(airports_all);
+      };
+
+      $http
+        .get('/json/airports.json')
+        .success(function(data) {
+          airports_all = data;
+          callback(airports_all);
+        })
+        .error(function() {
+          console.log('imposible get AIRPORTS json');
+        });
+    }
+
+
 
     return {
       get_airports: get_airports,
       get_object: get_object,
       get_city: get_city,
+      get_airports_all
     }
 
   }]);

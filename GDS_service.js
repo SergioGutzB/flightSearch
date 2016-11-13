@@ -18,6 +18,7 @@ app.use(bodyParser.json())
 
 /*------------------Routing Started ------------------------*/
 app.get('/search/', function(req, res) {
+  console.log("/search/")
   var options = {
     method: 'POST',
     url: 'http://127.0.0.1:8000/search/',
@@ -41,20 +42,40 @@ app.get('/search/', function(req, res) {
   })
 })
 
-app.get('/result/pages/', function(req, res) {
+app.post('/result/pages/', function(req, res) {
+  console.log("consultando /result/pages/")
   var options = {
     method: 'GET',
-    url: 'http://127.0.0.1:8000/results/page/0/',
+    url: 'http://127.0.0.1:8000/results/page/' + req.body.page + '/',
     json: true,
     body: {
-      'solution': req.query.result.solution,
-      'solution_return': req.query.result.solution_return
+      'solution': req.body.result.solution,
+      'solution_return': req.body.result.solution_return
     }
   }
   request(options, function(error, response, body) {
     if (error) throw new Error(error)
     console.log(body)
-    res.send({ success: true, result: body })
+    res.send(body)
+  })
+})
+
+app.post('/results/details/', function(req, res) {
+  console.log("consultando /results/details/")
+  console.log(req.body)
+  var options = {
+    method: 'GET',
+    url: 'http://127.0.0.1:8000/results/details/' + req.body.key + '/',
+    json: true,
+    body: {
+      'solution': req.body.result.solution,
+      'solution_return': req.body.result.solution_return
+    }
+  }
+  request(options, function(error, response, body) {
+    if (error) throw new Error(error)
+    console.log(body)
+    res.send(body)
   })
 })
 

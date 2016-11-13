@@ -37,6 +37,11 @@ angular
       }
     })
 
+    .when('/compra/', {
+      templateUrl: '/templates/buy.html',
+      controller: 'Purchase'
+    })
+
 
     .otherwise({
       redirectTo: '/'

@@ -1,0 +1,178 @@
+<div class="modal-header text-right">
+  <button class="btn btn-primary" ng-click="ok()"><img src="/images/cancel.png" alt="logo"></button>
+
+  <div class="row">
+    <div class="col-xs-12 text-center visible-xs">
+      <img class="logo" src="/images/logo_modal.png" alt="logo">
+    </div>
+  </div>
+
+</div>
+<div class="modal-body">
+
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-9 detail">
+
+      <div ng-repeat="fare in fares">
+
+        <div class="col-xs-12 col-sm-6" ng-class="{'col-md-offset-3': fares.length == '1' }">
+
+          <div class="col-sm-3 header-detail text-center">
+            <h5 ng-show="fare.round_trip == 0">SALIDA</h5>
+            <h5 ng-show="fare.round_trip == 1">REGRESO</h5>
+          </div>
+
+          <div class="col-xs-12 col-md-12 container-detail">
+
+            <div ng-repeat="segment in fare.details.trips[0].segments">
+
+              <div class="col-md-12 img-air text-right" ng-show="$first">
+                <img ng-src="/[[segment.airline.icon]]">
+                <h4>[[segment.airline.name]]</h4>
+                <h4 class="flight_number">([[segment.flight_number]])</h4>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-12 date-container">
+                <p class="date-detail" ng-show="$first">[[segment.departure_date | date: 'fullDate']]</p>
+              </div>
+
+              <div class="col-xs-8 info info-details">
+                <ul class="list-inline">
+                  <li class="col-info-deatil" ng-hide="!$first">
+                    <h4>[[segment.origin.name]]</h4>
+                    <h6>[[segment.departure_date | date:'HH:mm']]</h6>
+                  </li>
+                  <br ng-show="fare.departure.scales == '0'">
+                  <li class="col-info-deatil" ng-hide="!$last">
+                    <h4>[[segment.destination.name]] </h4>
+                    <h6>[[segment.arrival_date | date:'HH:mm']]</h6>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <div ng-repeat="segment in fare.details.trips[0].segments">
+
+              <div class="col-xs-8 time-box" ng-show="$first">
+                <ul class="list-inline time-fligth">
+                  <li>
+                    <h4>Tiempo de vuelo</h4>
+                  </li>
+                  <li class="time">
+                    <h5>[[fare.departure.travel_time]]</h5>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <div ng-repeat="segment in fare.details.trips[0].segments">
+            <div ng-show="fare.departure.scales == '0'">
+              <div class="container-scales col-xs-12" ng-class="{'margin-for-scales': fare.return.scales == '1'}">
+                <h4>Directo</h4>
+                <div class="col-xs-6 text-left scale">
+                  <img src="/images/scale.png" popover="[[segment.departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                  <h4>[[segment.origin.code]]</h4>
+                </div>
+                <div class="col-xs-6 text-right scale">
+                  <img src="/images/scale.png" popover="[[segment.arrival_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                  <h4>[[segment.destination.code]]</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div ng-show="fare.departure.scales == '1'">
+            <div class="container-scales col-xs-12">
+              <h4>1 Escala</h4>
+              <div class="col-xs-4">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[0].departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[0].origin.code]]</h4>
+              </div>
+              <div class="col-xs-4 text-center">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[0].arrival_date | date:'HH:mm']]-[[fare.details.trips[0].segments[1].departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[0].destination.code]]</h4>
+              </div>
+              <div class="col-xs-4 text-right">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[1].arrival_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[1].destination.code]]</h4>
+              </div>
+            </div>
+          </div>
+
+          <div ng-show="fare.departure.scales == '2'">
+            <div class="container-scales col-xs-12">
+              <h4>2 Escalas</h4>
+              <div class="col-xs-3">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[0].departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[0].origin.code]]</h4>
+              </div>
+              <div class="col-xs-3 text-center">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[0].arrival_date | date:'HH:mm']]-[[fare.details.trips[0].segments[1].departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[1].origin.code]]</h4>
+              </div>
+              <div class="col-xs-3 text-right">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[1].arrival_date | date:'HH:mm']]-[[fare.details.trips[0].segments[2].departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[1].destination.code]]</h4>
+              </div>
+              <div class="col-xs-3 text-right">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[2].arrival_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[2].destination.code]]</h4>
+              </div>
+            </div>
+          </div>
+
+          <div ng-show="fare.departure.scales == '3'">
+            <div class="container-scales col-xs-12">
+              <h4>3 Escalas</h4>
+              <div class="col-xs-2">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[0].departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[0].origin.code]]</h4>
+              </div>
+              <div class="col-xs-2 text-center">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[0].arrival_date | date:'HH:mm']]-[[fare.details.trips[0].segments[1].departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[1].origin.code]]</h4>
+              </div>
+              <div class="col-xs-4 text-center">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[1].arrival_date | date:'HH:mm']]-[[fare.details.trips[0].segments[2].departure_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[1].destination.code]]</h4>
+              </div>
+              <div class="col-xs-2 text-right">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[2].arrival_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[2].destination.code]]</h4>
+              </div>
+              <div class="col-xs-2 text-right">
+                <img src="/images/scale.png" popover="[[fare.details.trips[0].segments[3].arrival_date | date:'HH:mm']]" popover-trigger="mouseenter">
+                <h4>[[fare.details.trips[0].segments[3].destination.code]]</h4>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-3 purchase-button">
+      <h4 popover="Número de garantías que te ofrecen." popover-trigger="mouseenter">Garantías<span>+3</span></h4>
+      <h5><img src="/images/24_hrs.png" alt="24hrs">Servicio 24 horas</h5>
+      <h5><img src="/images/call.png" alt="call">Atención telefonica</h5>
+      <h5><img src="/images/cancel_flight.png" alt="cancel_flight">Cancelacion de vuelos</h5>
+      <button class="btn btn-default" ng-click="purchase(fare.key)">Comprar</button>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="detail">
+        <div class="col-xs-12 container-agencies">
+          <h4>Tiempo estimado</h4>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
