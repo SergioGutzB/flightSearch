@@ -1,5 +1,6 @@
-var express = require('express'),
-  app = express();
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
 
 var allowCrossDomain = function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -10,6 +11,7 @@ var allowCrossDomain = function(req, res, next) {
 }
 
 app.use(allowCrossDomain)
+app.use(bodyParser.json())
 
 function pronostico(fecha) {
   return Math.floor(Math.random() * (100 - 0));
@@ -48,8 +50,9 @@ app.get('/clima_actual', function(req, res) {
 });
 
 app.post('/clima_actual', function(req, res) {
-  var data = clima(req['query']['ciudad'], req['query']['fecha']);
-  res.end(JSON.stringify(data));
+  console.log(req.body)
+  var data = clima(req.body.ciudad, req.body.fecha);
+  res.send(JSON.stringify(data));
 });
 
 //SE ESCUCHA PARA SERVIR

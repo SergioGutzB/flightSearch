@@ -90,8 +90,9 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
     });
 
   $fare.getTime($rp.destination, $filter('date')($rp.departure, 'yyyy-MM-dd'))
-    .then(function(res) {
-      console.log(res)
+    .then(function (res) {
+      $scope.temperatura = res.data.temperatura;
+      $scope.humedad = res.data.humedad;
     });
 
 

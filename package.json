@@ -6,7 +6,9 @@
   "dependencies": {
     "express": "^4.14.0",
     "soap": "^0.17.0",
-    "body-parser": "1.15.2"
+    "body-parser": "1.15.2",
+    "request": "2.78.0",
+    "node-rest-client": "latest"
   },
   "devDependencies": {},
   "scripts": {

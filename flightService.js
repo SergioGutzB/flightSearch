@@ -39,7 +39,7 @@ isDate = function(date1, date2) {
       else
         return false
   else
-    return false
+    return falsgo_to_stretche
   else
     return false
 }
@@ -48,7 +48,7 @@ var xml = require('fs').readFileSync('flight.wsdl', 'utf8')
 
 var soap = require('soap')
   // http server example 
-var http = require('http')
+'43es'
 var server = http.createServer(function(request, response) {
   response.end('404: Not Found: ' + request.url)
 })
