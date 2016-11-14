@@ -9,10 +9,14 @@
             <h3>Buscar Reservas</h3>
             <form class="form-inline">
               <div class="form-group">
-                <label class="sr-only" for="doc_id">Busca tus reservas con tu documento de indentificación:</label>
-                <input type="text" id="doc_id" class="form-control" ng-model="doc_id" placeholder="Documento de identificación">
+                <input type="text" id="doc_id" class="form-control" ng-model="doc_id" placeholder="Documento de identificación" style="  background-color: #f9f9f9;
+  color: #555 !important;
+  border-radius: 0;
+  width: 300px;
+  font-size: 16px;">
               </div>
-              <button class="btn btn-default" ng-click="buscar()">Buscar</button>
+              <button type="submit" class="btn btn-primary">
+  <span class="glyphicon glyphicon-search" aria-hidden="true" ng-click="buscar()"></span> </button>
             </form>
             <!--<img src="/images/doots.png" alt="doots">-->
           </div>

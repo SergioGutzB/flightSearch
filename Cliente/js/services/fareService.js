@@ -40,7 +40,7 @@ angular
     function next(result, callback) {
       if (!more) callback(null)
       $http({
-          url: 'http://127.0.0.1:3000/result/pages/',
+          url: 'http://127.0.0.1:3000/api/result/pages/',
           method: 'POST',
           data: {
             page: page,
@@ -93,7 +93,7 @@ angular
           callback(null, fare)
         } else {
           $http({
-              url: 'http://127.0.0.1:3000/results/details/',
+              url: 'http://127.0.0.1:3000/api/results/details/',
               method: 'POST',
               data: {
                 key: key,
@@ -144,7 +144,7 @@ angular
       searchFare: function(origin, destination, departure_date, return_date, passengers) {
         global = $http({
           method: 'GET',
-          url: 'http://127.0.0.1:3000/search/?origin=' + origin + '&destination=' + destination + '&departure_date=' + departure_date + '&return_date=' + return_date + '&adults=' + passengers.adults + '&children=' + passengers.children + '&babies1=' + passengers.babies1
+          url: 'http://127.0.0.1:3000/api/search/?origin=' + origin + '&destination=' + destination + '&departure_date=' + departure_date + '&return_date=' + return_date + '&adults=' + passengers.adults + '&children=' + passengers.children + '&babies1=' + passengers.babies1
         })
         all_fares = []
         more = true

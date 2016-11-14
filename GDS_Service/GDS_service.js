@@ -1,5 +1,4 @@
 var express = require('express')
-var request = require('request')
 var bodyParser = require('body-parser')
 var http = require('http')
 var MongoClient = require('mongodb').MongoClient
@@ -20,66 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 /*------------------Routing Started ------------------------*/
-app.get('/search/', function(req, res) {
-  console.log('/search/')
-  var options = {
-    method: 'POST',
-    url: 'http://127.0.0.1:8000/search/',
-    headers: {
-      'cache-control': 'no-cache'
-    },
-    json: true,
-    body: {
-      origin: req.query.origin,
-      destination: req.query.destination,
-      departure_date: req.query.departure_date,
-      return_date: req.query.return_date,
-      adults: req.query.adults,
-      children: req.query.children,
-      babies1: req.query.babies1
-    }
-  }
-  request(options, function(error, response, body) {
-    if (error) throw new Error(error)
-    res.send({ success: true, result: body })
-  })
-})
 
-app.post('/result/pages/', function(req, res) {
-  console.log('consultando /result/pages/')
-  var options = {
-    method: 'GET',
-    url: 'http://127.0.0.1:8000/results/page/' + req.body.page + '/',
-    json: true,
-    body: {
-      'solution': req.body.result.solution,
-      'solution_return': req.body.result.solution_return
-    }
-  }
-  request(options, function(error, response, body) {
-    if (error) throw new Error(error)
-    res.send(body)
-  })
-})
-
-app.post('/results/details/', function(req, res) {
-  console.log('consultando /results/details/')
-  var options = {
-    method: 'GET',
-    url: 'http://127.0.0.1:8000/results/details/' + req.body.key + '/',
-    json: true,
-    body: {
-      'solution': req.body.result.solution,
-      'solution_return': req.body.result.solution_return
-    }
-  }
-  request(options, function(error, response, body) {
-    if (error) throw new Error(error)
-    res.send(body)
-  })
-})
-
-// Cargamos los endpoints
 require('./routes.js')(app);
 
 /*--------------------Routing Over----------------------------*/
