@@ -4,12 +4,12 @@ var express = require('express');
 
 var weatherService = {
   WeatherService: {
-    weather: {
-      Search: function(args){
+    weatherPort: {
+      Search: function(args) {
         console.log("pille esto");
         return {
-          temperature: 15,
-          humidity: 5
+          temperature: "15",
+          humidity: "5"
         };
       }
     }
@@ -18,7 +18,7 @@ var weatherService = {
 
 var xml = require('fs').readFileSync("weather.wsdl", 'utf8');
 
-var server = http.createServer(function(request,response) {
+var server = http.createServer(function(request, response) {
   //response.end("404: Not Found: " + request.url);
   response.end("Hola mundo");
 });
