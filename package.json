@@ -4,11 +4,11 @@
   "description": "Example implementation of SOA",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.14.0",
-    "soap": "^0.17.0",
     "body-parser": "1.15.2",
+    "express": "^4.14.0",
+    "node-rest-client": "latest",
     "request": "2.78.0",
-    "node-rest-client": "latest"
+    "soap": "^0.17.0"
   },
   "devDependencies": {},
   "scripts": {
