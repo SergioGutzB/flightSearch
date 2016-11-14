@@ -1,41 +1,41 @@
 <div class="modal-header">
-    <h3 class="modal-title">Estado de tu Compra</h3>
+  <h3 class="modal-title">Estado de tu Reserva</h3>
 </div>
 <div class="modal-body">
-    <div class="col-xs-12">
-        <br>
-        <h5>La compra ha sido registrada a nombre de [[statePurchase.customerInformation.owner_name]] con el correo [[statePurchase.customerInformation.email]]</h5>
-        <h3>Para los pasajeros</h3>                                    
-        <div ng-repeat="passenger in statePurchase.passengerInformation">
-            <p>[[passenger.firstName]] [[passenger.lastName]]</p>
-        </div>
-        <br>
-        <div>
-            <h4>Ida </h4>
-            <p>Vuelo: [[statePurchase.segments[0][0].origin]] -[[statePurchase.segments[0][0].destination]]</p>
-            <h4><strong>Escalas</strong></h4>
-            <div ng-repeat="segment in statePurchase.segments[0] ">
-                <p>Escala [[$index]]: [[segment.origin]] -[[segment.destination]]</p>
-                <p>En las fechas: [[segment.departureDate | date: 'fullDate']] -[[segment.arrivalDate | date: 'fullDate']]</p>
-                <p>Y numero de vuelo [[segment.flightNumber]]</p>
-                <br>        
-            </div>
-        </div>
-        <div ng-show="statePurchase.segments[1] != null">
-            <h4>Vuelta </h4>
-            <p>Vuelo: [[statePurchase.segments[1][0].origin]] -[[statePurchase.segments[1][0].destination]]</p>
-            <h4><strong>Escalas</strong></h4>
-            <div ng-repeat="segment in statePurchase.segments[1] ">
-                <p>Escala [[$index]]: [[segment.origin]] -[[segment.destination]]</p>
-                <p>En las fechas: [[segment.departureDate | date: 'fullDate']] -[[segment.arrivalDate | date: 'fullDate']]</p>
-                <p>Y numero de vuelo [[segment.flightNumber]]</p>
-                <br>        
-            </div>
-        </div>
-        <h2>Ha sido realizada Exitosamente!!</h2>
-        <h4>Su codigo de reserva es <strong>[[statePurchase.ticketInfo]]</strong></h4>
+  <div class="col-xs-12">
+    <br>
+    <h5>La reserva ha sido registrada a nombre de [[statePurchase.customerInformation.name]] [[statePurchase.customerInformation.lastname]] con el correo [[statePurchase.customerInformation.email]]</h5>
+    <h3>Para los pasajeros</h3>
+    <div ng-repeat="passenger in statePurchase.passengerInformation">
+      <p>[[passenger.firstName]] [[passenger.lastName]]</p>
     </div>
+    <br>
+    <div>
+      <h4>Ida </h4>
+      <p>Vuelo: [[statePurchase.segments[0][0].origin]] -[[statePurchase.segments[0][0].destination]]</p>
+      <h4><strong>Escalas</strong></h4>
+      <div ng-repeat="segment in statePurchase.segments[0] ">
+        <p>Escala [[$index]]: [[segment.origin]] -[[segment.destination]]</p>
+        <p>En las fechas: [[segment.departureDate | date: 'fullDate']] -[[segment.arrivalDate | date: 'fullDate']]</p>
+        <p>Y numero de vuelo [[segment.flightNumber]]</p>
+        <br>
+      </div>
+    </div>
+    <div ng-show="statePurchase.segments[1] != null">
+      <h4>Vuelta </h4>
+      <p>Vuelo: [[statePurchase.segments[1][0].origin]] -[[statePurchase.segments[1][0].destination]]</p>
+      <h4><strong>Escalas</strong></h4>
+      <div ng-repeat="segment in statePurchase.segments[1] ">
+        <p>Escala [[$index]]: [[segment.origin]] -[[segment.destination]]</p>
+        <p>En las fechas: [[segment.departureDate | date: 'fullDate']] -[[segment.arrivalDate | date: 'fullDate']]</p>
+        <p>Y numero de vuelo [[segment.flightNumber]]</p>
+        <br>
+      </div>
+    </div>
+    <h2>Ha sido realizada Exitosamente!!</h2>
+    <h4>Su codigo de reserva es <strong>[[statePurchase.ticketInfo]].</strong> Debe guardar el código para cancelar, editar o hacer efectíva su reserva.</h4>
+  </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
 </div>

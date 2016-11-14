@@ -1,0 +1,87 @@
+<div class="purchase">
+
+  <div class="container-summary" style="  min-height: 120px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="col-xs-12 inputs search-form">
+
+            <h3>Buscar Reservas</h3>
+            <form class="form-inline">
+              <div class="form-group">
+                <label class="sr-only" for="doc_id">Busca tus reservas con tu documento de indentificación:</label>
+                <input type="text" id="doc_id" class="form-control" ng-model="doc_id" placeholder="Documento de identificación">
+              </div>
+              <button class="btn btn-default" ng-click="buscar()">Buscar</button>
+            </form>
+            <!--<img src="/images/doots.png" alt="doots">-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-general" style="  min-height: calc(84vh);">
+    <div class="container container-purchase">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="col-xs-12 passengers" ng-if="is_reservas" ng-repeat="reserva in reservas">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="col-xs-6">
+                  <h5>Reserva no: [[reserva._id]]</h5>
+                </div>
+                <div class="col-xs-6">
+                  <h5>Codigo de transacción: [[reserva.transaction.code]]</h5>
+                </div>
+                <div class="col-xs-12 col-lg-4">
+                  <h6>A nombre de: [[reserva.customerInformation.name]] [[reserva.customerInformation.lastname]]</h6>
+                  <h6>Identificación: [[reserva.customerInformation.identifier]]</h6>
+                  <h6>E-mail: [[reserva.customerInformation.email]]</h6>
+                  <button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#eliminar" ng-click="set_eliminar(reserva._id, reserva.ticketInfo)">Eliminar</button>
+                  <!--<button type="submit" class="btn btn-default" ng-click="cambiar()">Cambiar vuelos</button>-->
+                </div>
+                <div class="col-xs-12 col-lg-4">
+                  <h6>Adultos: [[reserva.passengers.adults]]</h6>
+                  <h6>Niños: [[reserva.passengers.child]]</h6>
+                  <h6>Bebés: [[reserva.passengers.infant]]</h6>
+                  <button type="submit" class="btn btn-info" ng-click="editar_info($index)">Editar información</button>
+                </div>
+                <div class="col-xs-12 col-lg-4">
+                  <h6>Impuestos y tasas<span> $ [[reserva.transaction.taxes | number:0]]</span></h6>
+                  <h6>Cargos<span> $ [[reserva.transaction.volaires | number:0]]</span></h6>
+                  <h6 class="total">Total<span> $ [[reserva.transaction.amount | number:0]]</span></h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Eliminar reserva</h4>
+      </div>
+      <div class="modal-body">
+        <h5>Para eliminar la reserva No. [[reserva_active]] ingrese el Codigo de ticketInfo generado al momento de realizar la reserva. </h5>
+        <form class="form-inline">
+          <div class="form-group">
+            <label class="sr-only" for="ticketinfo">TicketInfo</label>
+            <input type="text" id="ticketinfo" class="form-control" ng-model="ticketinfo" placeholder="Documento de identificación">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" ng-click="eliminar()">Eliminar Reserva</button>
+      </div>
+    </div>
+  </div>
+</div>

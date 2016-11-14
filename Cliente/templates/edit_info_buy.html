@@ -1,0 +1,177 @@
+<div class="purchase">
+
+  <div class="container-general">
+    <div class="container container-purchase">
+
+      <form name="purcheseForm">
+        <div class="row" ng-mouseup="showIndicator = 'passenger'">
+          <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8 passengers">
+            <img src="/images/indicator.png" class="show-indicator">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-12 method-payment">
+                    <h5>PASAJEROS</h5>
+                    <div ng-repeat="p in range(dataSource.passenger.adults)">
+                      <h6><img src="/images/passenger.png" alt="pasajeros"> ADULTO [[$index + 1]]</h6>
+                      <adults></adults>
+                    </div>
+                    <div ng-repeat="p in range(dataSource.passenger.child)">
+                      <h6><img src="/images/passenger.png" alt="pasajeros"> NIÑO [[$index + 1]]</h6>
+                      <children></children>
+                    </div>
+                    <div ng-repeat="p in range(dataSource.passenger.infant)">
+                      <h6><img src="/images/passenger.png" alt="pasajeros"> BEBÉ [[$index + 1]]</h6>
+                      <infant></infant>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-mouseup="showIndicator = 'methodPayment'">
+          <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+            <img src="/images/indicator.png" ng-show="showIndicator == 'methodPayment'" class="show-indicator">
+            <div class="panel panel-default">
+              <div class="panel-body">
+
+                <div class="row">
+                  <div class="col-xs-12 method-payment">
+                    <h5><img src="/images/money.png" alt="pesos">FORMA DE PAGO</h5>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12 col-md-12 cont-input-radio">
+                    <ul class="">
+                      <li>
+                        <input ng-init="content='reserve'" type="radio" name="methodofPayment" id="reserve" option="reserve" value="reserve" checked ng-model="content" value="reserve"><label for="reserve"><span><span></span></span>Reservar</label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div ng-show="content == 'reserve'">
+                  <div class="row">
+                    <div class="col-xs-12 content-reserve">
+                      <label>A continuación tienes la información de tu itinerario reservado. Ten en cuenta que debes realizar el pago antes del 09-03-2015 a las 16:31(GTM-4) o la reserva puede ser cancelada. Haz click aquí para acceder a nuestro portal y continuar con el proceso de pago </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12 secure">
+                    <p>Compre seguro</p>
+                    <p>Volaires utiliza redes seguras para proteger su información<img src="/images/secure.png" alt="secure"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" ng-mouseup="showIndicator = 'infoContact'">
+          <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+            <img src="/images/indicator.png" ng-show="showIndicator == 'infoContact'" class="show-indicator">
+            <div class="panel panel-default">
+              <div class="panel-body info-contact">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h5><img src="/images/info.png" alt="info">INFORMACIÓN DE CONTACTO DEL COMPRADOR</h5>
+                  </div>
+                </div>
+                <div class="row row-padding">
+                  <div class="col-xs-12 col-sm-6">
+                    <label>Nombre del Comprador</label>
+                    <input type="text" class="form-control" ng-model="card_owner_name" placeholder="Nombre" ng-pattern="validation.text" required>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <label>Apellido del Comprador</label>
+                    <input type="text" class="form-control" ng-model="card_owner_lastname" placeholder="Apellido" ng-pattern="validation.text" required>
+                  </div>
+                </div>
+
+                <div class="row row-padding">
+                  <div class="col-xs-12 col-sm-6">
+                    <label>Email</label>
+                    <input type="email" ng-model="email" class="form-control" placeholder="Ingrese su email" required>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <label>Confirme su Email</label>
+                    <input type="email" class="form-control" placeholder="Confirme su email" required>
+                  </div>
+                </div>
+                <div class="row row-padding">
+                  <div class="col-xs-12 col-sm-6">
+                    <label>Género</label>
+                    <select class="form-control" ng-model="card_owner_gender" required>
+                          <option disabled value="" selected>Género</option>
+                          <option value="M">Masculino</option>
+                          <option value="F">Femenino</option>
+                      </select>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <label>Identificación del titular de la tarjeta</label>
+                    <input type="text" class="form-control" ng-model="card_owner_id" ng-pattern="validation.text">
+                  </div>
+                </div>
+                <div class="row row-padding">
+                  <div class="col-xs-12 col-sm-4">
+                    <label>País</label>
+                    <select class="form-control" ng-model="country">
+                          <option value="" selected>Seleccione un pais</option>
+                          <option value="CO">Colombia</option>
+                      </select>
+                  </div>
+                  <div class="col-xs-12 col-sm-4">
+                    <label>Ciudad</label>
+                    <input type="text" class="form-control" ng-model="city" placeholder="Ciudad" ng-pattern="validation.text" required>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4">
+                    <label>Dirección</label>
+                    <input type="text" class="form-control" ng-model="card_owner_address" placeholder="Dirección" required>
+                  </div>
+                </div>
+
+
+                <div class="row row-padding">
+                  <div class="col-xs-12 col-sm-6">
+                    <label>Celular</label>
+                    <input type="text" class="form-control" ng-model="cellphone" ng-pattern="validation.text" required>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <label>Teléfono</label>
+                    <input type="text" class="form-control" ng-model="phone" ng-pattern="validation.text" required>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 last-col-4">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12 checkbox-rules">
+                    <input type="checkbox" id="rules" value="rules"><label for="rules"><span><span></span></span>Leí y acepto las condiciones de compra y <a href="">Ley de Habeas Data y Política de privacidad</a></label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" ng-hide="content == 'reserve'">
+          <div class="col-xs-12 text-center">
+            <input ng-disabled="purchase == true || purcheseForm.$invalid" type="button" class="btn btn-default btn-buy" value="Comprar" ng-click="getDataFromSource()">
+          </div>
+        </div>
+        <div class="row" ng-show="content == 'reserve'">
+          <div class="col-xs-12 text-center">
+            <button class="btn btn-default btn-buy" ng-click="reservar()">Reservar</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

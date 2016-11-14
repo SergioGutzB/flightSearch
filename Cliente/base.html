@@ -39,7 +39,7 @@
               <ul class="nav navbar-nav navbar-left" id="nav">
                 <li><a ng-class="getClass('/volaires')" href="/">TIQUETES</a></li>
                 <li class="divider-vertical"></li>
-                <li><a ng-class="getClass('/hoteles')" href="/">TIEMPO</a></li>
+                <li><a ng-class="getClass('/hoteles')" href="/reservas/">RESERVAS</a></li>
                 <li class="divider-vertical"></li>
               </ul>
 
@@ -66,6 +66,7 @@
   <script src="/js/jquery-1.11.1.min.js"></script>
   <script src="/js/jquery-ui.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.js"></script>
 
 
   <script src="/js/angular.min.js"></script>
@@ -92,10 +93,13 @@
   <script src="/js/controllers/results.js"></script>
   <script src="/js/controllers/navbar-controller.js"></script>
   <script src="/js/controllers/purchase.js"></script>
+  <script src="/js/controllers/reservas.js"></script>
 
   <script src="/js/services/fareService.js"></script>
   <script src="/js/services/iataService.js"></script>
   <script src="/js/services/comparativeBarsService.js"></script>
+
+  <script src="/js/services/data.js"></script>
 
   <script src="/js/directives/datepicker.js"></script>
   <script src="/js/directives/purchase-directive.js"></script>

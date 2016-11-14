@@ -6,5 +6,6 @@ var app = angular.module('clienteAPP', [
   'FareService',
   'angucomplete-alt',
   'ui.bootstrap',
-  'BarsService'
+  'BarsService',
+  'ServeData'
 ])

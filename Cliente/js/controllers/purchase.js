@@ -1,16 +1,27 @@
 var clienteAPP = angular.module('clienteAPP');
-clienteAPP.controller('Purchase', ['$scope', '$http', '$filter', '$modal', 'fare', 'iata', '$location', function($scope, $http, $filter, $modal, fare, $iata, $location) {
+clienteAPP.controller('Purchase', ['$scope', '$http', '$filter', '$modal', 'fare', 'iata', '$location', 'sData', function($scope, $http, $filter, $modal, fare, $iata, $location, sData) {
   // if ($location.$$url === '/volaires/compra/Rv2331/'){
+  $scope.sData = sData;
+
 
   /* Until $scope.on to keep fare or rate data in session in case of reload */
   if (sessionStorage.service == 'Air') {
-    $scope.fares = JSON.parse(sessionStorage.fares);
-    $scope.dataSource = $scope.fares[0].details;
-    $scope.type = 'Air';
+    if (sessionStorage.fares) {
+      $scope.fares = JSON.parse(sessionStorage.fares);
+      $scope.dataSource = $scope.fares[0].details;
+      console.log($scope.dataSource)
+      $scope.type = 'Air';
+    } else if ($scope.sData.reserva) {
+      $scope.data = $scope.sData.reserva
+      console.log($scope.data)
+      $scope.dataSource = { passenger: $scope.sData.reserva.passengers };
+    }
   } else {
     $scope.rate = JSON.parse(sessionStorage.rate);
     $scope.dataSource = $scope.rate;
   }
+
+
 
 
   $scope.$on('$locationChangeStart', function(event) {
@@ -19,23 +30,44 @@ clienteAPP.controller('Purchase', ['$scope', '$http', '$filter', '$modal', 'fare
   });
 
   /* Vars to save data of all passengers */
-  $scope.adultsInfo = getPassenger('ADT');
-  $scope.childrenInfo = getPassenger('CHD');
-  $scope.infantsInfo = getPassenger('INF');
-  $scope.currentYear = new Date().getFullYear();
-  $scope.data = {};
+  if (sessionStorage.fares) {
+    $scope.adultsInfo = getPassenger('ADT');
+    $scope.childrenInfo = getPassenger('CHD');
+    $scope.infantsInfo = getPassenger('INF');
+    $scope.currentYear = new Date().getFullYear();
+    $scope.data = {};
+  } else {
+    $scope.adultsInfo = _.filter($scope.sData.reserva.passengerInformation, { types: 'ADT' });
+    console.log($scope.adultsInfo)
+    $scope.childrenInfo = _.filter($scope.sData.reserva.passengerInformation, { types: 'CHD' });
+    console.log($scope.childrenInfo)
+    $scope.infantsInfo = _.filter($scope.sData.reserva.passengerInformation, { types: 'INF' });
+    console.log($scope.infantsInfo)
+    $scope.currentYear = new Date().getFullYear();
+    $scope.card_owner_name = $scope.sData.reserva.customerInformation.name
+    $scope.card_owner_lastname = $scope.sData.reserva.customerInformation.lastname
+    $scope.card_owner_gender = $scope.sData.reserva.customerInformation.gender
+    $scope.card_owner_address = $scope.sData.reserva.customerInformation.address
+    $scope.card_owner_id = $scope.sData.reserva.customerInformation.identifier
+    $scope.email = $scope.sData.reserva.customerInformation.email
+    $scope.cellphone = $scope.sData.reserva.customerInformation.cellphone
+    $scope.phone = $scope.sData.reserva.customerInformation.phone
+    $scope.country = $scope.sData.reserva.customerInformation.country
+    $scope.city = $scope.sData.reserva.customerInformation.city
+  }
+
 
   $scope.purchase = false;
   $scope.validation = {
     text: /^[\w ]+$/
   };
 
-  get_detail_info(sessionStorage.service);
-  get_detail_airport(sessionStorage.service);
+  if (sessionStorage.fares) {
+    get_detail_info(sessionStorage.service);
+    get_detail_airport(sessionStorage.service);
 
-
-
-  createTransactionPayment();
+    createTransactionPayment();
+  }
 
   function get_detail_airport(service) {
     var destinationCountry;
@@ -87,8 +119,6 @@ clienteAPP.controller('Purchase', ['$scope', '$http', '$filter', '$modal', 'fare
     });
   }
 
-
-
   /* Creates a transaction and requested the fingerprint */
   function createTransactionPayment() {
     if ($scope.transaction) {
@@ -111,7 +141,6 @@ clienteAPP.controller('Purchase', ['$scope', '$http', '$filter', '$modal', 'fare
     }, 5000);
   }
 
-
   /* Basic structure for all passengers */
   function getPassenger(pass) {
     passenger = [{
@@ -121,30 +150,42 @@ clienteAPP.controller('Purchase', ['$scope', '$http', '$filter', '$modal', 'fare
       monthBirth: "",
       yearBirth: "",
       dayBirth: "",
-      type: pass,
+      types: pass,
       gender: "",
       passport: ""
     }];
     return passenger;
   }
 
-  /* Next functions build trip data to send in request */
-  $scope.getDataFromSource = function() {
-    $scope.purchase = true;
-    $scope.transaction.amount = $scope.total_amount;
-    $scope.transaction.taxes = $scope.total_taxes;
-    $scope.transaction.volaires = $scope.total_volaires;
-
-    $scope.data = {
-      creditCard: {
-        cardNumber: $scope.CardNumber,
-        quotas: $scope.CardQuotas,
-        franchise: $scope.franchise,
-        expire_year: $scope.expire_year,
-        expire_month: $scope.expire_month,
-        security_code: $scope.security_code
-      },
-      customerInformation: {
+  $scope.reservar = function() {
+    if (sessionStorage.fares) {
+      $scope.transaction.amount = $scope.total_amount;
+      $scope.transaction.taxes = $scope.total_taxes;
+      $scope.transaction.volaires = $scope.total_volaires;
+      $scope.data = {
+        customerInformation: {
+          name: $scope.card_owner_name,
+          lastname: $scope.card_owner_lastname,
+          gender: $scope.card_owner_gender,
+          address: $scope.card_owner_address,
+          identifier: $scope.card_owner_id,
+          email: $scope.email,
+          cellphone: $scope.cellphone,
+          phone: $scope.phone,
+          country: $scope.country,
+          city: $scope.city
+        },
+        passengers: {
+          adults: $scope.dataSource.passengers.adults,
+          child: $scope.dataSource.passengers.child,
+          infant: $scope.dataSource.passengers.infant
+        },
+        passengerInformation: concatenate(),
+        transaction: $scope.transaction
+      };
+      completeData();
+    } else {
+      $scope.data.customerInformation = {
         name: $scope.card_owner_name,
         lastname: $scope.card_owner_lastname,
         gender: $scope.card_owner_gender,
@@ -155,216 +196,237 @@ clienteAPP.controller('Purchase', ['$scope', '$http', '$filter', '$modal', 'fare
         phone: $scope.phone,
         country: $scope.country,
         city: $scope.city
+      };
+      $scope.data.passengers = {
+        adults: $scope.dataSource.passenger.adults,
+        child: $scope.dataSource.passenger.child,
+        infant: $scope.dataSource.passenger.infant
+      };
+      $scope.data.passengerInformation = concatenate();
+      $scope.data.transaction = $scope.transaction;
+    var caracteres = "0123456789QWERTYUIOPLKJHGFDSAZXCVBNM";
+    $scope.data.ticketInfo = rand_code(caracteres, 6);
+
+    book_update($scope.data);
+
+  }
+
+}
+
+function concatenate() {
+  passInfo = $scope.adultsInfo;
+  if ($scope.dataSource.passenger.child > 0) {
+    passInfo = passInfo.concat($scope.childrenInfo);
+  }
+  if ($scope.dataSource.passenger.infant > 0) {
+    passInfo = passInfo.concat($scope.infantsInfo);
+  }
+  return passInfo;
+}
+
+function rand_code(chars, lon) {
+  code = "";
+  for (x = 0; x < lon; x++) {
+    rand = Math.floor(Math.random() * chars.length);
+    code += chars.substr(rand, 1);
+  }
+  return code;
+}
+
+function completeData(data) {
+  if (sessionStorage.service == 'Air') {
+    $scope.data.segments = [];
+    for (i in $scope.fares) {
+      aux = [];
+      for (index in $scope.fares[i].details.trips[0].segments) {
+        segment = {};
+        segment['airline'] = $scope.fares[i].details.trips[0].segments[index].airline.code;
+        segment['origin'] = $scope.fares[i].details.trips[0].segments[index].origin.code;
+        segment['destination'] = $scope.fares[i].details.trips[0].segments[index].destination.code;
+        segment['departureDate'] = $scope.fares[i].details.trips[0].segments[index].departure_date;
+        segment['arrivalDate'] = $scope.fares[i].details.trips[0].segments[index].arrival_date;
+        segment['flightNumber'] = $scope.fares[i].details.trips[0].segments[index].flight_number;
+        segment['bookingClass'] = $scope.fares[i].details.trips[0].segments[index].bookingClass;
+        aux.push(segment);
+      }
+      $scope.data.segments.unshift(aux);
+    }
+    dataJs = JSON.stringify($scope.data);
+    var caracteres = "0123456789QWERTYUIOPLKJHGFDSAZXCVBNM";
+    $scope.data.ticketInfo = rand_code(caracteres, 6);
+
+    book($scope.data);
+  }
+}
+
+function openPurchase(data, response) {
+  var modalInstance = $modal.open({
+    templateUrl: '/templates/modal_purchase.html',
+    controller: 'ModalInstanceCtrl2',
+    size: 'lg',
+    resolve: {
+      data: function() {
+        return data;
       },
-      passengers: {
-        adults: $scope.dataSource.passengers.adults,
-        child: $scope.dataSource.passengers.child,
-        infant: $scope.dataSource.passengers.infant
+      response: function() {
+        return response;
       },
-      passengerInformation: concatenate(),
-      transaction: $scope.transaction
-    };
-    completeData();
-  }
-
-  function concatenate() {
-    passInfo = $scope.adultsInfo;
-    if ($scope.dataSource.passengers.child > 0) {
-      passInfo = passInfo.concat($scope.childrenInfo);
-    }
-    if ($scope.dataSource.passengers.infant > 0) {
-      passInfo = passInfo.concat($scope.infantsInfo);
-    }
-    return passInfo;
-  }
-
-  function completeData(data) {
-    if (sessionStorage.service == 'Air') {
-      $scope.data.segments = [];
-      for (i in $scope.fares) {
-        aux = [];
-        for (index in $scope.fares[i].details.trips[0].segments) {
-          segment = {};
-          segment['airline'] = $scope.fares[i].details.trips[0].segments[index].airline.code;
-          segment['origin'] = $scope.fares[i].details.trips[0].segments[index].origin.code;
-          segment['destination'] = $scope.fares[i].details.trips[0].segments[index].destination.code;
-          segment['departureDate'] = $scope.fares[i].details.trips[0].segments[index].departure_date;
-          segment['arrivalDate'] = $scope.fares[i].details.trips[0].segments[index].arrival_date;
-          segment['flightNumber'] = $scope.fares[i].details.trips[0].segments[index].flight_number;
-          segment['bookingClass'] = $scope.fares[i].details.trips[0].segments[index].bookingClass;
-          aux.push(segment);
-        }
-        $scope.data.segments.unshift(aux);
+      type: function() {
+        return 'Ok';
       }
-      dataJs = JSON.stringify($scope.data);
-      book(dataJs, '/payResults/');
-    } else {
-      $scope.data.rate = $scope.rate.detail;
-      dataJs = JSON.stringify($scope.data);
-      book(dataJs, '/hotelBook/');
     }
+  });
+  modalInstance.result.then(function() {}, function() {
+
+  });
+};
+
+
+function openErrorPurchase(data, response) {
+  var modalInstance = $modal.open({
+    templateUrl: '/templates/modal_error_purchase.html',
+    controller: 'ModalInstanceCtrl2',
+    size: 'lg',
+    resolve: {
+      data: function() {
+        return data;
+      },
+      response: function() {
+        return response;
+      },
+      type: function() {
+        return 'Error';
+      }
+    }
+  });
+  modalInstance.result.then(function() {}, function() {
+
+  });
+};
+
+
+
+/* Makes request to book air or hotel */
+function book(data_json) {
+  console.log(data_json);
+
+  fare.setReserva($scope.data)
+    .then(function(response) {
+      console.log("Reserva realizada")
+      console.log(response.data)
+      openPurchase($scope.data, $scope.data);
+    }, function(error) {
+      console.log("La Reserva no fue realizada")
+      console.log(error)
+      openErrorPurchase($scope.data, $scope.data);
+    });
+
+}
+
+function book_update(data_json) {
+  console.log(data_json);
+
+  fare.updateReserva($scope.data)
+    .then(function(response) {
+      console.log("Reserva actualizada")
+      console.log(response.data)
+      openPurchase($scope.data, $scope.data);
+    }, function(error) {
+      console.log("La Reserva no fue actualizada")
+      console.log(error)
+      openErrorPurchase($scope.data, $scope.data);
+    });
+
+}
+
+/* Next functions restrict choices of birth dates depending on the type of passenger */
+$scope.pickDay = function(index, type) {
+  days = [];
+  for (i = 1; i <= 31; i++) {
+    days.push(i);
   }
+  if (type == 0) x = $scope.adultsInfo[index];
+  else if (type == 1) x = $scope.childrenInfo[index];
+  else x = $scope.infantsInfo[index];
 
-  function openPurchase(data, response) {
-    var modalInstance = $modal.open({
-      templateUrl: '/templates/modal_purchase.html',
-      controller: 'ModalInstanceCtrl2',
-      size: 'lg',
-      resolve: {
-        data: function() {
-          return data;
-        },
-        response: function() {
-          return response;
-        },
-        type: function() {
-          return 'Ok';
-        }
-      }
-    });
-    modalInstance.result.then(function() {}, function() {
-
-    });
-  };
-
-
-  function openErrorPurchase(data, response) {
-    var modalInstance = $modal.open({
-      templateUrl: '/templates/modal_error_purchase.html',
-      controller: 'ModalInstanceCtrl2',
-      size: 'lg',
-      resolve: {
-        data: function() {
-          return data;
-        },
-        response: function() {
-          return response;
-        },
-        type: function() {
-          return 'Error';
-        }
-      }
-    });
-    modalInstance.result.then(function() {}, function() {
-
-    });
-  };
-
-
-
-  /* Makes request to book air or hotel */
-  function book(data_json, url_request) {
-    console.log(data_json);
-    $http({
-      url: url_request,
-      method: 'POST',
-      data: data_json
-    })
-
-    .success(function(data) {
-      if (data.status === 'Ok') {
-        // $scope.purchase = false; //disabled button comprar
-        openPurchase($scope.data, data);
+  if (x.monthBirth == 4 || x.monthBirth == 6 || x.monthBirth == 9 || x.monthBirth == 11) {
+    days.splice(30, 1);
+  } else {
+    if (x.monthBirth == 2) {
+      if (x.yearBirth % 4 == 0) {
+        days.splice(29, 2);
       } else {
-        // $scope.purchase = false;
-        openErrorPurchase($scope.data, data);
+        days.splice(28, 3);
       }
-    })
-
-    .error(function(err) {
-      // $scope.purchase = false;
-      openErrorPurchase($scope.data, err);
-    });
+    }
   }
+  return days;
+};
 
-  /* Next functions restrict choices of birth dates depending on the type of passenger */
-  $scope.pickDay = function(index, type) {
-    days = [];
-    for (i = 1; i <= 31; i++) {
-      days.push(i);
+$scope.pickMonth = function(index, type, max, min) {
+  months = [];
+  date = new Date();
+  for (i = 1; i <= 12; i++) {
+    months.push(i);
+  }
+  if (type == 1) x = $scope.childrenInfo[index];
+  else x = $scope.infantsInfo[index];
+
+  if (x.yearBirth == date.getFullYear() - max) {
+    months.splice(0, date.getMonth());
+  } else {
+    if (x.yearBirth == date.getFullYear() - min) {
+      months.splice(date.getMonth() + 1, 11 - date.getMonth());
     }
-    if (type == 0) x = $scope.adultsInfo[index];
-    else if (type == 1) x = $scope.childrenInfo[index];
-    else x = $scope.infantsInfo[index];
+  }
+  return months;
+};
 
-    if (x.monthBirth == 4 || x.monthBirth == 6 || x.monthBirth == 9 || x.monthBirth == 11) {
-      days.splice(30, 1);
-    } else {
-      if (x.monthBirth == 2) {
-        if (x.yearBirth % 4 == 0) {
-          days.splice(29, 2);
-        } else {
-          days.splice(28, 3);
-        }
-      }
+$scope.restrictDays = function(index, type, max, min) {
+  days = $scope.pickDay(index, type);
+  date = new Date();
+  if (type == 1) x = $scope.childrenInfo[index];
+  else x = $scope.infantsInfo[index];
+
+  if (x.yearBirth == date.getFullYear() - max) {
+    if (x.monthBirth == date.getMonth() + 1) {
+      days.splice(0, date.getDate());
     }
-    return days;
-  };
-
-  $scope.pickMonth = function(index, type, max, min) {
-    months = [];
-    date = new Date();
-    for (i = 1; i <= 12; i++) {
-      months.push(i);
-    }
-    if (type == 1) x = $scope.childrenInfo[index];
-    else x = $scope.infantsInfo[index];
-
-    if (x.yearBirth == date.getFullYear() - max) {
-      months.splice(0, date.getMonth());
-    } else {
-      if (x.yearBirth == date.getFullYear() - min) {
-        months.splice(date.getMonth() + 1, 11 - date.getMonth());
-      }
-    }
-    return months;
-  };
-
-  $scope.restrictDays = function(index, type, max, min) {
-    days = $scope.pickDay(index, type);
-    date = new Date();
-    if (type == 1) x = $scope.childrenInfo[index];
-    else x = $scope.infantsInfo[index];
-
-    if (x.yearBirth == date.getFullYear() - max) {
+  } else {
+    if (x.yearBirth == date.getFullYear() - min) {
       if (x.monthBirth == date.getMonth() + 1) {
-        days.splice(0, date.getDate());
-      }
-    } else {
-      if (x.yearBirth == date.getFullYear() - min) {
-        if (x.monthBirth == date.getMonth() + 1) {
-          days = days.slice(0, date.getDate() - 1);
-        }
+        days = days.slice(0, date.getDate() - 1);
       }
     }
-    return days;
-  };
+  }
+  return days;
+};
 
-  $scope.range = function(range) {
-    range = parseInt(range);    
-    array = [];    
-    for (var i = 0; i <= range - 1; i++) {       array.push(i);     }    
-    return array;  
-  };
+$scope.range = function(range) {
+  range = parseInt(range);    
+  array = [];    
+  for (var i = 0; i <= range - 1; i++) {       array.push(i);     }    
+  return array;  
+};
 
-  $scope.open = function(size) {
-    history.back();
-    var modalInstance = $modal.open({
-      location: '/results/details',
-      templateUrl: '/templates/details.html',
-      controller: 'ModalInstanceCtrl',
-      size: size,
-      resolve: {
-        fares: function() {
-          return $scope.fares;
-        }
+$scope.open = function(size) {
+  history.back();
+  var modalInstance = $modal.open({
+    location: '/results/details',
+    templateUrl: '/templates/details.html',
+    controller: 'ModalInstanceCtrl',
+    size: size,
+    resolve: {
+      fares: function() {
+        return $scope.fares;
       }
-    });
-  }
+    }
+  });
+}
 
-  if ($location.path() == "/compra/") {
-    angular.element(document.getElementById("footer")).removeClass('hid');
-  }
+if ($location.path() == "/compra/") {
+  angular.element(document.getElementById("footer")).removeClass('hid');
+}
 
 }]);
 
@@ -373,11 +435,10 @@ clienteAPP.controller('ModalInstanceCtrl2', ['$scope', '$modalInstance', '$locat
 
   $scope.ok = function() {
     $modalInstance.close();
-    //$location.path("/volaires/")
+    $location.path('/reservas/');
   };
 
   $scope.statePurchase = data;
-  $scope.statePurchase.ticketInfo = response.ticketInfo;
   if (type === 'Error') {
     try {
       $scope.messagesError = data.data.map(function(d) { return d.message }).join(' ');

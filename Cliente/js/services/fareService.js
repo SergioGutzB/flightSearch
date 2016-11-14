@@ -160,7 +160,50 @@ angular
             fecha: departure_date,
           }
         })
-
+        return global
+      },
+      setReserva: function(reserva) {
+        global = $http({
+          method: 'POST',
+          url: 'http://127.0.0.1:3000/api/reserva/',
+          data: reserva
+        })
+        return global
+      },
+      getReservas: function() {
+        global = $http({
+          method: 'GET',
+          url: 'http://127.0.0.1:3000/api/reserva/'
+        })
+        return global
+      },
+      updateReserva: function(reserva) {
+        global = $http({
+          method: 'PUT',
+          url: 'http://127.0.0.1:3000/api/reserva/' + reserva._id,
+          data: reserva
+        })
+        return global
+      },
+      removeReserva: function(reserva_id) {
+        global = $http({
+          method: 'DELETE',
+          url: 'http://127.0.0.1:3000/api/reserva/' + reserva_id
+        })
+        return global
+      },
+      getReservaCustomer: function(customer_id) {
+        global = $http({
+          method: 'GET',
+          url: 'http://127.0.0.1:3000/api/reserva/' + customer_id
+        })
+        return global
+      },
+      getReservaID: function(reserva_id) {
+        global = $http({
+          method: 'GET',
+          url: 'http://127.0.0.1:3000/api/reserva/' + reserva_id
+        })
         return global
       }
     }

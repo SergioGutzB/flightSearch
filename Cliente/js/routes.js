@@ -42,6 +42,16 @@ angular
       controller: 'Purchase'
     })
 
+    .when('/reservas/', {
+      templateUrl: '/templates/reservas.html',
+      controller: 'Reserva'
+    })
+
+    .when('/update/', {
+      templateUrl: '/templates/edit_info_buy.html',
+      controller: 'Purchase'
+    })
+
 
     .otherwise({
       redirectTo: '/'
