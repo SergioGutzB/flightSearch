@@ -7,36 +7,6 @@ angular
     var page = 0
     var purchase_fares = null
 
-    function search(origin, destination, departure_date, return_date, passengers, callback) {
-      $http({
-        url: '/search/',
-        method: 'POST',
-
-        data: {
-          origin: origin,
-          destination: destination,
-          departure_date: departure_date,
-          return_date: return_date,
-          adults: passengers.adults,
-          children: passengers.children,
-          babies1: passengers.babies1
-        }
-      })
-
-      .success(function(data) {
-        // reset variables
-        all_fares = []
-        more = true
-        page = 0
-
-        callback()
-      })
-
-      .error(function(err) {
-        callback(err)
-      })
-    }
-
     function next(result, callback) {
       if (!more) callback(null)
       $http({
@@ -137,7 +107,6 @@ angular
 
     return {
       next: next,
-      search: search,
       details: getDetails,
       setFaresforPurchase: setFaresforPurchase,
       getFaresforPurchase: getFaresforPurchase,

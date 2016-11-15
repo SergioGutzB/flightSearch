@@ -1,7 +1,6 @@
 var request = require('request')
 
 exports.getSearch = function(req, res) {
-  console.log('/search/')
   var options = {
     method: 'POST',
     url: 'http://127.0.0.1:8000/search/',
@@ -20,7 +19,7 @@ exports.getSearch = function(req, res) {
     }
   }
   request(options, function(error, response, body) {
-    if (error) throw new Error(error)
+    if (error) throw res.send(error)
     res.send({ success: true, result: body })
   })
 }

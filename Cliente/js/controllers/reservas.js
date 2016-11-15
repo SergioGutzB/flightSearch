@@ -3,6 +3,16 @@ var clienteAPP = angular.module('clienteAPP')
 $('#eliminar').on('shown.bs.modal', function() {
   $('#myInput').focus()
 })
+$('#editar').on('shown.bs.modal', function() {
+  $('#myInput').focus()
+})
+
+$('#editar').on('hide.bs.modal', function(e) {
+  console.log("print")
+})
+$('#editar').on('hidden.bs.modal', function(e) {
+  console.log("print 2")
+})
 
 clienteAPP.controller('Reserva', ['$scope', '$http', '$location', 'fare', 'iata', '$filter', 'sData',
   function($scope, $http, $location, $fare, $iata, $filter, sData) {
@@ -12,6 +22,7 @@ clienteAPP.controller('Reserva', ['$scope', '$http', '$location', 'fare', 'iata'
     $scope.reserva_active = "";
     $scope.reservas = null;
     $scope.is_reservas = false;
+    $scope.index_reserva = null;
 
     $scope.sData = sData;
 
@@ -54,12 +65,23 @@ clienteAPP.controller('Reserva', ['$scope', '$http', '$location', 'fare', 'iata'
       console.log(id)
     }
 
+    $scope.ir_editar = function() {
+      $scope.sData.reserva = $scope.reservas[$scope.index_reserva]
+      console.log($scope.sData.reserva)
+        // $location.path('/update/');
+        // $('#editar').modal('hide');
+      $('#editar').modal('hide')
+      $('#eliminar').modal('hide')
+      $('.modal-backdrop').remove()
+      $location.path('/update/');
+
+
+
+    }
+
     $scope.editar_info = function(index) {
       console.log("editar infor")
-      console.log(index)
-      $scope.sData.reserva = $scope.reservas[index]
-      console.log($scope.sData.reserva)
-      $location.path('/update/');
+      $scope.index_reserva = index;
     }
   }
 ])

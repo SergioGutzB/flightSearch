@@ -47,10 +47,12 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   var solution = {};
   var solution_return = {};
 
+  
+   $rp.return =  $rp.return ? $rp.return : '';
 
   $fare.searchFare($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 })
     .then(function(res) {
-      // console.log(res.data.result);
+      console.log(res.data.result)
       result_sol = res.data.result;
       solution = res.data.result.solution;
       solution_return = res.data.result.solution_return;
