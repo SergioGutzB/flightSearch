@@ -7,6 +7,10 @@ var weatherService = {
     weatherPort: {
       Search: function(args) {
         console.log("pille esto");
+        var petition = 'api.openweathermap.org/data/2.5/weather?q='+args.city+',uk&APPID=774e78a49e9e0b1f7eed558ec2e259f6';
+        express.get(petition, function(data){
+          return data.main;
+        });
         return {
           temperature: "15",
           humidity: "5"
