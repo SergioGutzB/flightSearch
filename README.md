@@ -19,7 +19,7 @@ DELETE|Delete a resource|"200 OK" if the resource has been deleted successfully,
 
 ### GDS_Service WADL     
 
-`<application 
+```<application 
 	xmlns="http://wadl.dev.java.net/2009/02" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:hy="http://www.herongyang.com/Service">
@@ -100,4 +100,4 @@ DELETE|Delete a resource|"200 OK" if the resource has been deleted successfully,
 			</method>
 		</resource>
 	</resources>
-</application>`
+</application>```

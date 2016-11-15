@@ -36,6 +36,8 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
     maxRet: 0
   }
 
+
+
   $scope.currentPageD, $scope.currentPageR = 0
   $scope.pageSize = 20
   $scope.max = 0
@@ -47,8 +49,8 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
   var solution = {};
   var solution_return = {};
 
-  
-   $rp.return =  $rp.return ? $rp.return : '';
+
+  $rp.return = $rp.return ? $rp.return : '';
 
   $fare.searchFare($rp.origin, $rp.destination, $rp.departure, $rp.return, { adults: $rp.adults, children: $rp.children, babies1: $rp.babies1, babies2: $rp.babies2 })
     .then(function(res) {
@@ -553,6 +555,9 @@ clienteAPP.controller('Results', ['$http', '$filter', 'fare', 'iata', '$routePar
 clienteAPP.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', '$location', '$http', 'iata', 'fares', 'fare', function($scope, $modalInstance, $location, $http, iata, fares, $fare) {
   $scope.fares = []
   $scope.total_price = 0
+
+  $scope.temperatura = 25
+  $scope.humedad = 80
 
   fares.forEach(function(fare) {
     $fare.details(result_sol, fare.key, function(err, data) {
