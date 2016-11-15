@@ -20,6 +20,22 @@ app.use('/css', express.static(__dirname + '/css'));
 /*--------------------SOAP CLIENT----------------------------*/
 
 var url = 'http://127.0.0.1:8000/wsdl?wsdl'
+app.post('/weather', function(req, res) {
+  console.log("-------------------");
+  console.log(req.query);
+  console.log("-------------------");
+  var args = req.body;
+  var result = null;
+  soap.createClient(url, function(err, client) {
+    if (err) throw err
+    client.Search(args, function(err, result) {
+      if (err) throw err
+      console.log(result);
+      res.send({ success: true, result: result });
+    });
+  });
+  console.log("se fue la peticion");
+});
 
 /*------------------Routing Started ------------------------*/
 
